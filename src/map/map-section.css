@@ -1,0 +1,15 @@
+.map-section {
+    display: flex; /* Esto hará que los elementos hijos se alineen en una fila */
+}
+
+.gmap-frame {
+    flex: auto; /* Esto hará que cada div ocupe la mitad del espacio disponible */
+    border-right: 1px solid #000; /* Esto añade una línea divisoria a la derecha */
+    padding-right: 20px; /* Esto añade un espacio a la derecha de la sección */
+}
+
+.map-section__info {
+    flex: auto; /* Esto hará que cada div ocupe la mitad del espacio disponible */
+    border-left: 1px solid #000; /* Esto añade una línea divisoria a la izquierda */
+    padding-left: 8rem; /* Esto añade un espacio a la izquierda de la sección */
+}

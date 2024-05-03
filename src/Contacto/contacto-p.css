@@ -1,0 +1,58 @@
+.contacto__p {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 auto;
+    color: black;
+}
+
+.contacto__p__div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Esto centrará los elementos a lo largo del eje principal */
+    align-items: center; /* Esto centrará los elementos a lo largo del eje transversal */
+    margin: 0 auto;
+    border-bottom: 2px solid black;
+    
+}
+
+.contacto__p__div__inf__div{
+    display: flex;
+    align-items: center; /* Centra los elementos verticalmente */
+    justify-content: center; /* Centra los elementos horizontalmente */
+    flex-direction: row; /* Alinea los elementos en una sola línea */
+    cursor: pointer;
+    white-space: nowrap;
+    margin-block: 1rem;
+}
+
+.contacto__p__div__inf__div p{
+    color: black;
+    margin-left: 1.5rem;
+    font-size: 20px;
+    font-weight: 300;
+}
+
+.contacto__p__div__inf{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; /* Esto centrará los elementos a lo largo del eje transversal */
+    margin: 0 auto;
+    margin-block: 2rem;
+}
+
+.contacto__p__div__inf p{
+    color: black;
+    margin-left: 1.5rem;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+
+.contacto__p__div__inf__div .icon{
+    color: black;
+    margin-left: 1.5rem;
+}

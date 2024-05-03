@@ -1,0 +1,107 @@
+.navbar {
+    background-color: #c92929;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+}
+
+.sb__navbar-links_div {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    text-align: left;
+    gap: 40%;
+}
+
+.sb__navbar-links_div p{
+    font-size: 20px;
+    font-weight: 650;
+    white-space: nowrap;
+}
+
+ @media (max-width: 900px) {
+    .sb__navbar-links_div {
+        gap: 5%;
+    }
+} 
+/* 
+.navbar {
+    position: fixed;
+    display: flex;
+    align-items:  center;
+    justify-content: space-between;
+    background: #c92929;
+    width: 100%;
+    padding: 1rem;
+    z-index:1000;
+}
+
+@media screen and(max-width: 768px){
+        .navbar_section{
+            position:absolute;
+            height: max-content;
+            width: 80%;
+            border-radius: 1rem;
+            top: 6rem;
+            left: 50%;
+            transform:  translateX(-50%);
+            z-index:2000;
+            box-shadow: 0 2px 4px rgba(1,15,29,0.904);
+            transition:.3s ease-in-out
+        }
+
+        .navbar_list{
+            flex-direction: column;
+            justify-content: center;
+            width: 100%;
+            margin: auto;
+            padding: 5rem 0;
+
+            .navitem{
+                padding: .5rem 0;
+
+                .navLink{
+                    color: #b38d8b;
+                    font-size: .9rem;   ;
+                    font-weight: 600;
+
+                    &:hover{
+                        color: #745453;
+                    }
+                }
+            }
+
+            .btn{
+                margin-top: 1rem;
+
+                a{
+                    font-weight: 600;
+                    color:white;
+
+                }
+            }
+        }
+
+        .closeNavbar{
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            color:white;
+            &:hover{
+                color: #745453;
+            }
+        }
+}
+
+.openNavbar{
+    .icon{
+        font-size: 25px;
+        color: white;
+    }
+    &:hover.icon{
+        color: #745453;
+    }
+} */
