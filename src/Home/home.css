@@ -1,0 +1,17 @@
+.slider_home {
+    padding: 0rem ;
+    background: linear-gradient(to top, #964B96,#EC6839);
+}
+
+.Info_home {
+    padding: 2rem 3rem;
+}
+
+.map_home {
+    padding: 2rem 3rem;
+}
+
+.carousel_home {
+    background-color: white;
+    padding: 2rem 1rem;
+}

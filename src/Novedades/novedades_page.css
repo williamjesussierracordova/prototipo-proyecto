@@ -1,0 +1,90 @@
+
+
+.title_novedades {
+    padding: 1rem 2rem;
+    display: flex;
+    width: 100%;
+    height: fit-content;
+}
+
+
+.card {
+    top: 0;
+    left: 0;
+    width: 60%;
+    height: fit-content;
+    object-fit: cover;
+}
+
+.card-p {
+
+    width:80%;
+    height: fit-content;
+    object-fit: cover;
+
+}
+
+.novedades_pagination {
+    width: 100%;
+    height: fit-content;
+    padding: 2rem 2rem; 
+    flex-direction: column;
+    display: flex;
+}
+
+.novedades_slides {
+    width : 100%;
+}
+
+.carousel_events {
+    padding-top: 2rem 0;
+}
+
+.pagination {
+    padding: 2rem 0;
+}
+
+.pagination_buttons {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.slide_events {
+    padding: 2rem;
+    align-items: stretch;
+}
+
+@media screen and (max-width:1000px){
+    .slide_events{
+        padding: 2rem 0;
+    }
+}
+
+.novedades_principales {
+    padding: 2rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.novedad_1 , .novedad_2 {
+    flex:1;
+}
+
+.novedad_1{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+
+@media (max-width: 1200px) {
+    .novedades_principales {
+        flex-direction: column;
+    }
+
+    .novedad_1, .novedades_2 {
+        width: 100%;
+    }
+}

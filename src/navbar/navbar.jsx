@@ -1,15 +1,24 @@
 import React from "react";
 import "./navbar.css";
 import { Link } from "react-router-dom";
+import { TiThMenu } from "react-icons/ti";
+import { IoCloseCircle } from "react-icons/io5";
+import { useState } from "react";
 
 
 
 const Navbar = () => {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggleMenu = () => {
+        setIsOpen(!isOpen);
+    };
+
     return (
         <div className="navbar">
             <div className="sb__navbar section__padding">
                 <div className="sb__navbar-links">
-                    <div className="sb__navbar-links_div">
+                    <div className={`sb__navbar-links_div ${isOpen ? "open" : ""}`}>
                         <a href="">
                             <Link to="/">
                                 <p>Inicio</p>
@@ -36,11 +45,14 @@ const Navbar = () => {
                             </Link>
                         </a>
                     </div>
+                    <div className="menu-icon" onClick={toggleMenu}>
+                        {isOpen ? <IoCloseCircle /> : <TiThMenu />}
+                    </div>
                 </div>
             </div>
         </div>
     );
-}
+};
 
 export default Navbar;
 

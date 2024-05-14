@@ -5,11 +5,28 @@
 .gmap-frame {
     flex: auto; /* Esto hará que cada div ocupe la mitad del espacio disponible */
     border-right: 1px solid #000; /* Esto añade una línea divisoria a la derecha */
-    padding-right: 20px; /* Esto añade un espacio a la derecha de la sección */
+    padding-right: 2rem; /* Esto añade un espacio a la derecha de la sección */
 }
 
 .map-section__info {
     flex: auto; /* Esto hará que cada div ocupe la mitad del espacio disponible */
     border-left: 1px solid #000; /* Esto añade una línea divisoria a la izquierda */
-    padding-left: 8rem; /* Esto añade un espacio a la izquierda de la sección */
+    padding-left: 2rem; /* Esto añade un espacio a la izquierda de la sección */
+}
+
+@media screen and (max-width: 1200px) {
+    .map-section {
+        flex-direction: column; /* Esto hará que los elementos hijos se alineen en una columna */
+    }
+
+    .gmap-frame,
+    .map-section__info {
+        border: none; /* Esto eliminará las líneas divisorias en dispositivos móviles */
+        padding: 0; /* Esto eliminará el espacio adicional en dispositivos móviles */
+    }
+
+    .gmap-frame iframe{
+        width: 100%; /* Esto hará que el mapa ocupe todo el ancho disponible */
+        height: fit-content; /* Esto establecerá una altura fija para el mapa */
+    }
 }

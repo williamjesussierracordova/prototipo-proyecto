@@ -6,7 +6,20 @@
 
 .nosotros-p video {
     width: 100%; /* Esto hará que el video ocupe todo el ancho disponible en su contenedor padre */
-    height: 500px; /* Esto hará que el video ocupe todo el alto disponible en su contenedor padre */
+    height: fit-content; /* Esto hará que el video ocupe todo el alto disponible en su contenedor padre */
     object-fit: cover; /* Esto hará que el video mantenga su aspecto y se ajuste al tamaño del contenedor */
-    overflow: hidden;
+    overflow: hidden ;
+}
+
+.nosotros-timeline {
+    padding: 2rem 2rem;
+    background-color: #D9D9D9;
+}
+
+.nosotros-ubicacion {
+    padding: 2rem 2rem;
+}
+
+.nosotros-info{
+    padding:2rem 2rem;
 }

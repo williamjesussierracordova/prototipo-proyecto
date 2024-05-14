@@ -13,7 +13,7 @@ function Inicio(){
         <div className="App">
                 <Body />
                 <Header />
-                <Navbar />
+                {/* <Navbar /> */}
                 <Contacto />
                 <Footer />
         </div>

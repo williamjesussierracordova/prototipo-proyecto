@@ -26,7 +26,7 @@ const info  = [
 
 const timeline = () => {
     return (
-        <div className="timeline section__padding">
+        <div className="timeline">
             <h1>Historia del Gran Teatro Nacional</h1>
             <Chrono items={info} mode="VERTICAL_ALTERNATING" 
             theme={{

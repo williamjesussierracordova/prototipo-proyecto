@@ -42,6 +42,7 @@ import Contacto from './contacto.jsx';
 import Nosotros from './nosotros.jsx';
 import Novedades from './novedades.jsx';
 import Espectaculos from './espectaculos.jsx';
+import Pasarela_Entrada from './pasarela_entrada_page.jsx';
 
 function App(){
     return (
@@ -53,6 +54,7 @@ function App(){
                 <Route path='/nosotros' element={<Nosotros />} />
                 <Route path='/novedades' element={<Novedades />} />
                 <Route path='/espectaculos' element={<Espectaculos />} />
+                <Route path='/pasarela' element={<Pasarela_Entrada />} />
             </Routes>
         </div>
         </>

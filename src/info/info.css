@@ -1,3 +1,7 @@
+.info_section {
+    padding: 0;
+}
+
 .info_tools {
     display: flex;
     justify-content: space-between; /* Esto hará que los elementos hijos se alineen en una fila */
@@ -5,30 +9,49 @@
 
 .image__info {
     flex: 1; /* Esto hará que cada div ocupe la mitad del espacio disponible */
-    padding-right: 20px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    align-items: center;
 }
 
 .image__info img {
-    width: 100%;
-    height: 90%;
+    width: 80%;
+    height: fit-content;
     object-fit: cover;
+    border-radius: 2rem;
 }
 
 .info__text {
     flex: 1; /* Esto hará que cada div ocupe la mitad del espacio disponible */
-    padding-left: 5rem;
+    padding: 0rem 2rem;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+
 }
 
 .info__text p {
-    font-size: 25px;
+    font-size: 22px;
     text-wrap: break-word;
-    color: white;
+    color: rgb(0, 0, 0);
 }
 
-.info_section{
-    background-color: black;
-}
 
 .info_section h1 {
-    color: white;
+    color: rgb(0, 0, 0);
+}
+
+@media screen and (max-width: 1200px) {
+    .info_tools {
+        flex-direction: column; /* Esto hará que los elementos hijos se alineen en una columna */
+    }
+
+    .image__info {
+        padding-right: 0px;
+    }
+
+    .info__text {
+        padding: 0rem 0rem;
+    }
 }

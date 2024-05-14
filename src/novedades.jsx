@@ -5,6 +5,7 @@ import Body from './body/body.jsx';
 import Footer from './footer/footer.jsx';
 import Header from './header/header.jsx';
 import Navbar from './navbar/navbar.jsx';
+import Novedades_p from './Novedades/novedades_page.jsx';
 
 function Novedades(){
     return (
@@ -12,7 +13,8 @@ function Novedades(){
         <div className="App">
                 <Body />
                 <Header />
-                <Navbar />
+                {/* <Navbar /> */}
+                <Novedades_p />
                 <Footer />
         </div>
         </>

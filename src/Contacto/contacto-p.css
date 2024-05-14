@@ -25,7 +25,6 @@
     flex-direction: row; /* Alinea los elementos en una sola línea */
     cursor: pointer;
     white-space: nowrap;
-    margin-block: 1rem;
 }
 
 .contacto__p__div__inf__div p{
@@ -34,6 +33,7 @@
     font-size: 20px;
     font-weight: 300;
 }
+
 
 .contacto__p__div__inf{
     display: flex;
@@ -46,9 +46,10 @@
 
 .contacto__p__div__inf p{
     color: black;
-    margin-left: 1.5rem;
     font-size: 20px;
     font-weight: 500;
+    align-items: center;
+    justify-content: center;
 }
 
 
@@ -56,3 +57,26 @@
     color: black;
     margin-left: 1.5rem;
 }
+
+.contacto__p__div__inf__div p:hover {
+    color: #EB524A;
+}
+
+.contacto__p__div__inf__div .icon:hover {
+    color: #EB524A;
+}
+
+
+
+@media screen and (max-width:1200px){
+    .contacto__p__div__inf p {
+        font-size: 15px;
+        text-align: center;
+        white-space: pre-line;
+    }
+
+    .icon {
+        font-size: 25px;
+    }
+}
+    

@@ -5,9 +5,8 @@ import Body from './body/body.jsx';
 import Footer from './footer/footer.jsx';
 import Header from './header/header.jsx';
 import Navbar from './navbar/navbar.jsx';
-import Slider from './sliderPrincipal/slider.jsx';
-import Sectionmap from './map/map-section.jsx';
-import Info from './info/info.jsx';
+import Home from './Home/home.jsx';
+
 
 function Inicio(){
     return (
@@ -15,10 +14,8 @@ function Inicio(){
         <div className="App">
                 <Body />
                 <Header />
-                <Navbar />
-                <Slider />    
-                <Info />   
-                <Sectionmap />
+                {/* <Navbar /> */}
+                <Home />
                 <Footer />
         </div>
         </>

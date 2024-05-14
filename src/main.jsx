@@ -4,9 +4,14 @@ import App from './App.jsx'
 //import App from './App.js'
 import './index.css'
 import { BrowserRouter } from 'react-router-dom'
+import '@mantine/core/styles.css';
+import { MantineProvider } from '@mantine/core';
+
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
+  <MantineProvider>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </MantineProvider>
 )

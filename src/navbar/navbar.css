@@ -27,6 +27,30 @@
         gap: 5%;
     }
 } 
+
+/* Oculta el icono del menú en pantallas grandes */
+.menu-icon {
+    display: none;
+}
+
+/* Estilos para el menú desplegable cuando está abierto */
+.sb__navbar-links_div.open {
+    display: block;
+}
+
+/* Cambia los estilos en función del tamaño de la pantalla */
+@media (max-width: 768px) {
+    /* Muestra el icono del menú en pantallas pequeñas */
+    .menu-icon {
+        display: block;
+    }
+
+    /* Oculta los enlaces del menú en pantallas pequeñas */
+    .sb__navbar-links_div {
+        display: none;
+    }
+}
+
 /* 
 .navbar {
     position: fixed;
@@ -104,4 +128,4 @@
     &:hover.icon{
         color: #745453;
     }
-} */
+} 
