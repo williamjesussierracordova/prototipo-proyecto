@@ -80,7 +80,7 @@ function Header() {
               <li className="nav-item">
                 <NavLink
                   exact
-                  to="/pasarela"
+                  to="/"
                   activeClassName="active"
                   className="nav-links"
                   onClick={handleClick}

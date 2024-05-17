@@ -1,0 +1,97 @@
+.top_pasarela {
+    padding: 2rem ; /* el padding es el espacio que hay entre el borde y el contenido */
+    display:flex;
+    flex-direction:row;
+    background: linear-gradient(to right,#EC6839, #964B96);
+}
+
+.top_pasarela img {
+    width: 200px;
+    height: fit-content;
+    margin-right: 1rem;
+}
+
+.pasarela_mapa_precios {
+    padding: 4rem 6rem;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pasarela_mapa img{
+    width: 100%;
+    height: fit-content;
+}
+
+.pasarela_precios {
+    width: fit-content;
+    height: 100%;
+}
+
+.pasarela_seleccion_entrada{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 1rem;
+
+}
+
+.pasarela_seleccion_entrada {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px; /* Espacio entre los elementos */
+}
+
+
+.pasarela_resumen {
+    padding: 2rem;
+}
+
+.pasarela_resumen_botones {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 0;
+}
+
+@media (max-width: 600px) {
+    .pasarela_seleccion_entrada {
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 1200px){
+    .top_pasarela {
+        flex-direction: column;
+        align-items: left;
+        padding: 1rem 2rem;
+    }
+
+    .top_pasarela img {
+        width: 0;
+        height: 0;
+    }
+
+    .top_pasarela_img{
+        display: none;
+    }
+
+    .pasarela_mapa_precios {
+        flex-direction: column;
+        padding: 2rem;
+    }
+
+    .pasarela_mapa .pasarela_precios {
+        padding: 0;
+    }
+
+    .top_pasarela_info h2 h3{
+        margin: 0px;
+        
+    }
+    
+    
+}

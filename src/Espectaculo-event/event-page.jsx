@@ -7,9 +7,21 @@ import { FaRegClock } from "react-icons/fa";
 import Countdown  from 'react-countdown';
 import Demo2 from "./accordion_event.jsx";
 import Map from '../map/map-section.jsx';
+import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useNavigate} from "react-router-dom";
 
 
-function EventPage() {
+
+function EventPage(  ) { /* necesito que reciba un parametro para saber que evento mostrar */
+  const location = useLocation();
+  const { card } = location.state;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const renderer = ({ days,hours, minutes, seconds, completed }) => {
     if (completed) {
       // Render a completed state
@@ -24,58 +36,57 @@ function EventPage() {
     <div className="event_page padding_event">
       <div className="button__volver">
             <Group justify="left">
-              <Button justify="space-between" variant="light" radius="lg" color="#2A468C" size="lg"  leftSection={<FaRegArrowAltCircleLeft />}  mt="md">
+              <Button justify="space-between" variant="light" radius="lg" color="#2A468C" size="lg"  leftSection={<FaRegArrowAltCircleLeft />}  mt="md" onClick={() => navigate(-1)}>
                 Volver
               </Button>
             </Group>
       </div>
-      <h1>THE CLANCY WORLD TOUR</h1>
+      <h1>{card.title}</h1>
       <div className="event_divisions">
         <div className="event_page_left">
             <div className="event_page_left_top">
               <div className="event_image">
-                <img src={clancy_tour} alt="clancy_tour" /> 
+                <img src={card.Image} alt="clancy_tour" /> 
               </div>
               <div className="countdown">
                 <h2> <FaRegClock /> Faltan</h2>
-                <Countdown date={'2025-02-02T21:00:00-05:00'} renderer={renderer}/>
+                <Countdown date={card.date} renderer={renderer}/>
               </div>
             </div>
             <div className="event_info">
               <h1 style={{color:"#2A468C"}}>Acerca del evento</h1>
-              <h3>TWENTY ONE PILOTS EN LIMA</h3>
-              <p>Grammy-Award winning band Twenty One Pilots make their highly anticipated return to Australia and New Zealand for the first time in 6 years on The Clancy World Tour in November 2024. The tour comes in support of the duos anticipated forthcoming album, Clancy, which will be released on May 17.</p>
-              <p>Having amassed over 33 billion streams worldwide and over 3 million tickets sold across global headline tours, the Columbus, OH based duo of Tyler Joseph and Josh Dun have established themselves as one of the most successful bands of the 21st century and redefined the sound of a generation.</p>
+              <h3>{card.subtitle}</h3>
+              <p>{card.text_description}</p>
             </div>
             <Demo />
         </div>
         <div className="event_page_right">
           <div className="low_price">
             <h3>Entradas desde</h3>
-            <h1>S/.250</h1>
+            <h1>S/.{card.min_price}</h1>
           </div>
           <div className="event_info_schedule">
             <div className="event_dates_info">
               <div className="date_event">
-                <p>02</p>
-                <span>Febrero</span>
+                <p>{card.day}</p>
+                <span>{card.month}</span>
               </div>
               <div className="event_schedule">
                 <h6>Horarios</h6>
                 <div className="event_schedule_hours">
                   <div className="event_schedule_hour">
-                    <p>19:00 hs</p>
+                    <p>{card.open_door} hs</p>
                     <span>Puertas</span>
                   </div>
                   <div className="event_schedule_hour">
-                    <p>21:00 hs</p>
+                    <p>{card.start} hs</p>
                     <span>Show</span>
                   </div>
                 </div>
               </div>
             </div>
             <div className="event_tickets_button">
-              <Button fullWidth variant="filled"  radius="lg" color="black" mt="md" >
+              <Button fullWidth variant="filled"  radius="lg" color="black" mt="md" onClick={() => navigate('/pasarela', { state: { card } })} >
                 Comprar
               </Button>
             </div>

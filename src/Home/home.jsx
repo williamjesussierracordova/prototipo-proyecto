@@ -15,7 +15,7 @@ function Home(){
                 <Slider /> 
             </div>
             <div className='carousel_home'>
-                <h1>Proximos eventos</h1>
+                <h1>Próximos eventos</h1>
                 <CarouselDemo />
             </div>
             <div className='Info_home'>
