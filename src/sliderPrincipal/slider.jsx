@@ -9,6 +9,10 @@ import { useNavigate } from 'react-router-dom';
 import cuco_pasarela from '../assets/cuco_pasarela.jpg';
 import nbhd_pasarela from '../assets/nbhd_pasarela.jpg';
 import top_pasarela from '../assets/top_pasarela.jpg';
+import nbhd_slider from '../assets/nbhd_slider.jpg';
+import cuco_slider from '../assets/cuco_slider.jpg'; 
+import cuco_mobile from '../assets/cuco_mobile.jpg';
+import nbhd_mobile from '../assets/nbhd_mobile.webp';
 
 function Slider() {
     const images = [
@@ -46,6 +50,7 @@ function Slider() {
             Id:1,
             original: clancy,
             Image: clancy,
+            image_mobile: top_pasarela,
             title: 'THE CLANCY TOUR',
             subtitle: 'TWEENTY ONE PILOTS EN LIMA',
             description:'Twenty one pilots en Lima por primera vez',
@@ -63,8 +68,9 @@ function Slider() {
         },
         {
             Id:2,
-            Image: nbhd,
-            original: nbhd,
+            Image: nbhd_slider,
+            original: nbhd_slider,
+            image_mobile: nbhd_mobile,
             title: 'THE NBHD TOUR',
             subtitle: 'THE NEIGHBOURHOOD EN LIMA',
             description: 'The Neighbourhood en Lima por primera vez',
@@ -82,8 +88,9 @@ function Slider() {
         },
         {
             Id:3,
-            Image: cuco_tour,
-            original: cuco_tour,
+            Image: cuco_slider,
+            original: cuco_slider,
+            image_mobile: cuco_mobile,
             title: 'CUCO TOUR',
             subtitle: 'CUCO EN LIMA',
             description: 'Cuco en Lima por primera vez',
@@ -99,23 +106,36 @@ function Slider() {
             artist: 'Cuco',
             image_pasarela: cuco_pasarela
         }
-    ]
+    ];
+
+    
 
     const navigate = useNavigate();
 
     const renderImage = (item) => {
         return (( 
             <div onClick={() => navigate('/evento', { state: {card : item}})} style={{cursor:'pointer'}}>
-                <img src={item.original} alt="" style={{ width: '90vw', height: 'fit-content', objectFit: 'cover' }} />
+                <img src={item.original} alt="" style={{ width: '100%', height: 'fit-content', objectFit: 'cover' }} />
             </div>
         ));
+    }
+
+    const imagesMobile = (item) => {
+        return (
+            <div onClick={() => navigate('/evento', { state: {card : item}})} style={{cursor:'pointer'}}>
+                <img src={item.image_mobile} alt="" style={{ width: '400px', height: '450px', objectFit: 'cover' }} />
+            </div>
+        );
     }
 
 
     return (
         <div className='Slider'>
             <ImageGallery items={images} 
-            renderItem={renderImage}
+            renderItem={
+                 /* necesito validar que si es mobile muestre la imagen mobile */
+                (item) => window.innerWidth < 768 ? imagesMobile(item) : renderImage(item)
+            }
             disableThumbnailScroll={false}
             showPlayButton={false}
             showFullscreenButton={false}
@@ -125,7 +145,6 @@ function Slider() {
             autoPlay={true} /*deslizar automaticamente*/
             slideDuration={500}
             />
-
         </div>
     );
 }

@@ -20,6 +20,11 @@
     /* max-width: 1500px; */
     position: relative;
     background-color: black;
+    position: sticky;
+    top: 0; /* sirve para que el nav se quede fijo en la parte superior */
+    left: 0; /* sirve para que el nav se quede fijo en la parte izquierda */ 
+    z-index: 1000; 
+    box-shadow: 0 2px 5px rgb(0,0,0,0.1);
   }
   
   .nav-logo {
@@ -30,7 +35,6 @@
     text-decoration: none;
     font-size: 1rem;
     flex-grow: 1;
-  
     display: flex;
     align-items: center;
     justify-items: center;
@@ -86,7 +90,6 @@
   
   .nav-item .active {
     color: #EB524A;
-    border: 1px solid #EB524A;
   }
   
   .nav-icon {
@@ -109,13 +112,14 @@
   }
   
   @media screen and (max-width: 960px) {
+
     .nav-menu {
       display: flex;
       flex-direction: column;
       width: 100%;
       border-top: 1pxsolid #fff;
       position: absolute;
-      top: 80px;
+      top: 48px;
       left: -110%;
       opacity: 1;
       transition: all 0.5s ease;
@@ -136,11 +140,6 @@
       padding: 1.5rem;
       width: 100%;
       display: table;
-    }
-  
-    .nav-logo .icon {
-      width: 2rem;
-      height: 2rem;
     }
   
     .nav-icon {

@@ -1,0 +1,130 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    border-radius: 20px;
+    border: 1px solid #ccc
+}
+
+.login-content {
+    display: flex;
+    width: 800px;
+    height: 450px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 30px;
+    overflow: hidden;
+}
+
+.login-image {
+    width: 50%;
+}
+
+
+
+.login-form {
+    width: 50%;
+    padding: 20px;
+    background-color: black;
+}
+
+.title-login-form {
+    display: flex;
+    width: 100%;
+    height: 50px;
+    object-fit: cover;
+    justify-content: center;
+    align-items: center;
+    /*necesito alinear todos los elementos a la izquierda*/
+    text-align: left;
+    padding-block: 0rem;
+}
+
+.title-login-form img{
+    width: 80px;
+    height: fit-content;
+    object-fit: cover;
+    padding-right: 10px ;
+}
+
+.title-login-form h1{
+    color: white;
+    font-size: 30px;
+    padding-left: 10px;
+}
+
+.subtitle-login-form {
+    padding: 0;
+    margin: 0;
+}
+
+.subtitle-login-form p {
+    color: white;
+    font-size: 13px;
+    font-weight: 100;
+}
+
+.login-buttons {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-buttons Button{
+    margin-inline: 1rem;
+    width: 120px;
+}
+
+/* .separator{
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 20px 0;
+    width: 100%;
+    color: white;
+}
+
+.separator span{
+    font-size: 13px;
+    font-weight: 100;
+    align-items: center;
+    justify-content: center;
+}
+
+.separator::before {
+    content: '';
+    flex-grow: 1;
+    border-bottom: 1px solid #ddd; 
+    margin: 0 10px; 
+  } */
+
+  .separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    padding-block: 10px;
+  }
+  
+  .separator::before,
+  .separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .separator::before {
+    margin-right: 10px;
+  }
+  
+  .separator::after {
+    margin-left: 10px;
+  }
+  
+  .separator span {
+    font-size: 13px;
+    font-weight: 100;
+    padding: 0 10px;
+    color: white;
+  }

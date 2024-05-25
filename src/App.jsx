@@ -44,6 +44,7 @@ import Novedades from './novedades.jsx';
 import Espectaculos from './espectaculos.jsx';
 import Pasarela_Entrada from './pasarela_entrada_page.jsx';
 import Espectaculo_page from './espectaculo_page.jsx';
+import LoginPage from './login_page.jsx';
 
 function App(){
     return (
@@ -58,6 +59,7 @@ function App(){
                 <Route path='/pasarela' element={<Pasarela_Entrada />} />
                 <Route path='/evento' element={<Espectaculo_page />} />
                 <Route path='/entradas' element={<Pasarela_Entrada />} />
+                <Route path='/login' element={<LoginPage />} />
             </Routes>
         </div>
         </>

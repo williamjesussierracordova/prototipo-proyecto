@@ -172,8 +172,8 @@ function carouselDemo() {
                     loop
                     align="start"
                     slidesToScroll={1}
-                    nextControlIcon={<FaArrowCircleRight style={{ width: 32 , height: 32, color:"black"}} />}
-                    previousControlIcon={<FaArrowCircleLeft style={{ width: 32 , height: 32}} />}
+                    nextControlIcon={<FaArrowCircleRight style={{ width: 32 , height: 32, color:"red"}} />}
+                    previousControlIcon={<FaArrowCircleLeft style={{ width: 32 , height: 32, color:'red'}} />}
                 >
                  {slides} 
                 </Carousel>
