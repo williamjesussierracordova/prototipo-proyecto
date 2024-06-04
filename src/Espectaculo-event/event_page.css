@@ -211,7 +211,7 @@
     }
 
     .padding_event {
-        padding: 1rem 1rem;
+        padding: 1rem 3rem;
     }
 
     .event_info_schedule {
@@ -222,4 +222,10 @@
         font-size: 1rem;
     }
     
+}
+
+@media screen and (max-width: 450px){
+    .padding_event {
+        padding: 1rem 1rem;
+    }
 }

@@ -2,12 +2,11 @@ import Demo from "./acordion.jsx";
 import { Group,Button } from "@mantine/core";
 import { FaRegArrowAltCircleLeft } from "react-icons/fa";
 import './event_page.css';
-import clancy_tour from '../assets/clancy_tour.jpg';
 import { FaRegClock } from "react-icons/fa";
 import Countdown  from 'react-countdown';
 import Demo2 from "./accordion_event.jsx";
 import Map from '../map/map-section.jsx';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useNavigate} from "react-router-dom";
 
@@ -17,10 +16,12 @@ function EventPage(  ) { /* necesito que reciba un parametro para saber que even
   const location = useLocation();
   const { card } = location.state;
   const navigate = useNavigate();
+  const { idEvento } = useParams();
 
+  console.log(idEvento);
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+  }, []);  
 
   const renderer = ({ days,hours, minutes, seconds, completed }) => {
     if (completed) {

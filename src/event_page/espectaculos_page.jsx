@@ -853,7 +853,7 @@ function Espectaculos() {
             </Text>
 
 
-            <Button color="blue" fullWidth mt="md" radius="md" onClick={() => navigate('/evento', { state: { card } })} >
+            <Button color="blue" fullWidth mt="md" radius="md" onClick={() => navigate(`/eventos/${card.Id}`, { state: { card } })} >
                 {card.message_button}
             </Button>
         </Card>

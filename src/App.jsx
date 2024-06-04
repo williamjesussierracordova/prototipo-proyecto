@@ -45,6 +45,7 @@ import Espectaculos from './espectaculos.jsx';
 import Pasarela_Entrada from './pasarela_entrada_page.jsx';
 import Espectaculo_page from './espectaculo_page.jsx';
 import LoginPage from './login_page.jsx';
+import SignUp from './signUp/signUp.jsx';
 
 function App(){
     return (
@@ -57,9 +58,11 @@ function App(){
                 <Route path='/novedades' element={<Novedades />} />
                 <Route path='/espectaculos' element={<Espectaculos />} />
                 <Route path='/pasarela' element={<Pasarela_Entrada />} />
-                <Route path='/evento' element={<Espectaculo_page />} />
+                <Route path='/eventos/:idEvento' element={<Espectaculo_page />} />
                 <Route path='/entradas' element={<Pasarela_Entrada />} />
                 <Route path='/login' element={<LoginPage />} />
+                <Route path='*' element={<h1>404 Not Found</h1>} />
+                <Route path='/registrar' element={<SignUp />} />
             </Routes>
         </div>
         </>

@@ -1,10 +1,7 @@
 import ImageGallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
-import pandemonium from '../assets/pandemonium.png';
 import './slider.css';
 import clancy from '../assets/clancy_tour.jpg';
-import nbhd from '../assets/nbhd.jpg';
-import cuco_tour from '../assets/cuco_tour.jpg';
 import { useNavigate } from 'react-router-dom';
 import cuco_pasarela from '../assets/cuco_pasarela.jpg';
 import nbhd_pasarela from '../assets/nbhd_pasarela.jpg';
@@ -114,7 +111,7 @@ function Slider() {
 
     const renderImage = (item) => {
         return (( 
-            <div onClick={() => navigate('/evento', { state: {card : item}})} style={{cursor:'pointer'}}>
+            <div onClick={() => navigate(`/eventos/${item.Id}`, { state: {card : item}})} style={{cursor:'pointer'}}>
                 <img src={item.original} alt="" style={{ width: '100%', height: 'fit-content', objectFit: 'cover' }} />
             </div>
         ));
@@ -122,7 +119,7 @@ function Slider() {
 
     const imagesMobile = (item) => {
         return (
-            <div onClick={() => navigate('/evento', { state: {card : item}})} style={{cursor:'pointer'}}>
+            <div onClick={() => navigate(`/eventos/${item.Id}`, { state: {card : item}})} style={{cursor:'pointer'}}>
                 <img src={item.image_mobile} alt="" style={{ width: '400px', height: '450px', objectFit: 'cover' }} />
             </div>
         );

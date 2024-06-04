@@ -1,0 +1,69 @@
+.sign-up_page {
+    /* Aplicar el gradiente radial al fondo de la página completa */
+    background: radial-gradient(circle at 50% 10%, #000 40%, #63e 100%);
+    /* Configurar altura y ancho completos */
+    /* Centrando los elementos dentro de la página */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Agregar relleno como en el código original de Tailwind */
+    margin: 0; /* Eliminar márgenes predeterminados */
+    box-sizing: border-box;
+}
+
+.sign-up-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.sign-up-content{
+    display: flex;
+    width: 800px;
+    height: 450px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 30px;
+    overflow: hidden;
+}
+
+.sign-up-image{
+    width: 30%;
+}
+
+.sign-up-form{
+    width: 70%;
+    padding: 20px;
+    background-color: black;
+}
+
+.title-sign-up-form{
+    display: flex;
+    width: 100%;
+    height: 50px;
+    object-fit: cover;
+    justify-content: center;
+    align-items: center;
+    /*necesito alinear todos los elementos a la izquierda*/
+    text-align: left;
+    padding-block: 0rem;
+    color: white;
+}
+
+.title-sign-up-form img{
+    width: 80px;
+    height: fit-content;
+    object-fit: cover;
+    padding-right: 10px ;
+}
+
+.title-sign-up-form h1{
+    font-size: 1.5rem;
+    font-size: 30px;
+}
+
+.subtitle-sign-up-form{
+    font-size: 13px;
+    font-weight: 100;
+    color: white;
+}

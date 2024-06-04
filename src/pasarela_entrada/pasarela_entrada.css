@@ -47,7 +47,7 @@
 
 
 .pasarela_resumen {
-    padding: 2rem;
+    padding: 0.5rem;
 }
 
 .pasarela_resumen_botones {
@@ -55,6 +55,42 @@
     justify-content: center;
     align-items: center;
     padding: 1rem 0;
+}
+
+.pasarela_resumen_tabla{
+    padding: 0rem;
+}
+
+.accordion_pasarela_seleccion_entrada{
+    display: flex;
+    flex-direction: column;    
+}
+
+.accordion_pasarela{
+    padding: 2rem 2rem;
+    padding-bottom: 3rem;
+}
+
+.formulario_entradas{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem 2rem;
+    background-color: #964B96;
+    border-radius: 40px;
+}
+
+.accordion_pasarela_datos_entrada{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem 2rem;
+    background-color: white;
+
+}
+
+.de_formulario TextInput{
+    padding: 2rem 0;
 }
 
 @media (max-width: 600px) {
@@ -92,6 +128,7 @@
         margin: 0px;
         
     }
+    
     
     
 }
