@@ -11,6 +11,9 @@ import { IoTicketOutline } from "react-icons/io5";
 import { Accordion } from "@mantine/core";
 import { TextInput } from "@mantine/core";
 import { Form, isInRange, isNotEmpty, useForm } from '@mantine/form';
+import { Modal } from "@mantine/core";
+import { useDisclosure } from '@mantine/hooks';
+
 const precios = [
     {
         id: 1,
@@ -181,6 +184,8 @@ const Pasarela_Entrada = () => {
     const [entradas, setEntradas] = useState([]);
     const [property, setProperty] = useState([]);
     const [nextProperty, setNextProperty] = useState(null);
+    const [opened, { open, close }] = useDisclosure(false);
+
 
     useEffect(() => {
         setTipoEntrada(null);
@@ -390,13 +395,13 @@ const Pasarela_Entrada = () => {
                                 <Table.Tbody>
                                     {entradas.map((entrada, index) => (
                                         <Table.Tr key={index}>
-                                            <Table.Td  style={{ textWrap:'pretty',fontSize:'12px'}}>{entrada.sector}</Table.Td>
+                                            <Table.Td style={{ textWrap: 'pretty', fontSize: '12px' }}>{entrada.sector}</Table.Td>
                                             {/* necesito abreviar el tipo de entrada a 3 letras */}
-                                            <Table.Td  style={{  fontSize:'12px' }}>{entrada.tipoEntrada.slice(0,3)}.</Table.Td>
-                                            <Table.Td  style={{ textWrap:'nowrap',fontSize:'12px' }}>
+                                            <Table.Td style={{ fontSize: '12px' }}>{entrada.tipoEntrada.slice(0, 3)}.</Table.Td>
+                                            <Table.Td style={{ textWrap: 'nowrap', fontSize: '12px' }}>
                                                 S/{entrada.precio}
                                             </Table.Td>
-                                            <Table.Td style={{ fontSize:'12px' }}>{entrada.cantidad}</Table.Td>
+                                            <Table.Td style={{ fontSize: '12px' }}>{entrada.cantidad}</Table.Td>
                                             <Table.Td>
                                                 <Button
                                                     variant="transparent"
@@ -404,7 +409,7 @@ const Pasarela_Entrada = () => {
                                                     onClick={() =>
                                                         setEntradas(entradas.filter((_, i) => i !== index))
                                                     }
-                                                    style={{fontSize:'12px' }}
+                                                    style={{ fontSize: '12px' }}
                                                 >
                                                     eliminar
                                                 </Button>
@@ -445,14 +450,19 @@ const Pasarela_Entrada = () => {
                                 radius="lg"
                                 style={{ margin: "1rem" }}
                                 disabled={entradas.length === 0}
-                                onClick={() => {
-                                    setProperty("Seleccion de entradas");
-                                    setNextProperty("Ingresar datos de las entradas");
-                                }}
+                                onClick={open}
                             >
                                 Pagar
                             </Button>
                         </div>
+                        <Modal
+                            opened={opened}
+                            onClose={close}
+                            title="Pasarela de pago"
+                            yOffset="120px"
+                        >
+                            <h1>izipay </h1>
+                        </Modal>
                     </div>
                 </div>
             ),
@@ -755,7 +765,7 @@ const Pasarela_Entrada = () => {
                         Comprar
                     </Button>
                 </div>
-            </div> */}
+            </div>  */}
         </div>
     );
 };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import "./login.css";
 import gtn_logo from "../assets/gtn-logo.png";
 import { Button, Input, PasswordInput } from "@mantine/core";
@@ -6,10 +6,6 @@ import { FcGoogle } from "react-icons/fc";
 import { FaLock } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import top_mobile from "../assets/top_pasarela.jpg";
-import { FaTwitter } from "react-icons/fa";
-import { AuthProvider } from "../context/AuthContext";
-import { auth } from "../firebase/firebase";
-import { createContext, useContext } from "react";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -70,8 +66,8 @@ export default function Login() {
               </div>
 
               <div className="signup_forgot_pasord">
-                <a href="/">¿No tienes cuenta? Registrate</a>
-                <a href="/">¿Olvidaste tu contraseña?</a>
+                <a href="/registrar">¿No tienes cuenta? Registrate</a>
+                <a href="/forget_password">¿Olvidaste tu contraseña?</a>
               </div>
 
               <div className="login-button">

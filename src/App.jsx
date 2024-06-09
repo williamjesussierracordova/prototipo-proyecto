@@ -46,6 +46,7 @@ import Pasarela_Entrada from './pasarela_entrada_page.jsx';
 import Espectaculo_page from './espectaculo_page.jsx';
 import LoginPage from './login_page.jsx';
 import SignUp from './signUp/signUp.jsx';
+import ForgetPassword from './forget_password/forget_password.jsx';
 
 function App(){
     return (
@@ -63,6 +64,7 @@ function App(){
                 <Route path='/login' element={<LoginPage />} />
                 <Route path='*' element={<h1>404 Not Found</h1>} />
                 <Route path='/registrar' element={<SignUp />} />
+                <Route path='/forget_password' element={<ForgetPassword />} />
             </Routes>
         </div>
         </>

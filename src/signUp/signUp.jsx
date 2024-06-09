@@ -5,19 +5,29 @@ import { MdEmail } from "react-icons/md";
 import top_mobile from "../assets/top_pasarela.jpg";
 import gtn_logo from "../assets/gtn-logo.png";
 import "../signUp/signUp.css";
+import { FaPhone } from "react-icons/fa6";
+import { HiIdentification } from "react-icons/hi2";
+import { CgProfile } from "react-icons/cg";
+
+
+
 
 export default function SignUp() {
   const [email, setEmail] = useState("");
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [password, setPassword] = useState("");
   const [isPasswordValid, setIsPasswordValid] = useState(true);
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const [isPasswordConfirmationVisible, setIsPasswordConfirmationVisible] =
-    useState(false);
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [isPasswordConfirmationValid, setIsPasswordConfirmationValid] =
     useState(true);
   const [isPasswordMatch, setIsPasswordMatch] = useState(true);
+  const [phone, setPhone] = useState("");
+  const [isPhoneValid, setIsPhoneValid] = useState(true);
+  const [name, setName] = useState("");
+  const [first_last_name, setFirstLastName] = useState("");
+  const [second_last_name, setSecondLastName] = useState("");
+  const [dni, setDni] = useState("");
+  
 
   const validateEmail = (email) => {
     const re =
@@ -44,6 +54,31 @@ export default function SignUp() {
     setIsPasswordMatch(password === passwordConfirmation);
   };
 
+  const handlePhoneNumber = (event) => {
+    const phone = event.target.value;
+    setPhone(phone);
+    setIsPhoneValid(phone.length === 9 && !isNaN(phone));
+  };
+
+  const handleName = (event) => {
+    const name = event.target.value;
+    setName(name);
+  }
+
+  const handleFirstLastName = (event) => {
+    const first_last_name = event.target.value;
+    setFirstLastName(first_last_name);
+  }
+
+  const handleSecondLastName = (event) => {
+    const second_last_name = event.target.value;
+    setSecondLastName(second_last_name);
+  }
+
+  const handleDni = (event) => {
+    const dni = event.target.value;
+    setDni(dni);
+  }
   return (
     <div className="sign-up_page">
       <div className="sign-up-container">
@@ -65,7 +100,7 @@ export default function SignUp() {
             </div>
             <div className="sign-up-inputs">
               <div className="sign-up-inputs-1">
-                <div className="correo-input">
+                <div className="email-input">
                   <Input
                     leftSection={<MdEmail />}
                     radius="lg"
@@ -79,7 +114,7 @@ export default function SignUp() {
                     error={!isEmailValid}
                   />
                 </div>
-                <div className="password-input">
+                <div className="password-input1">
                   <PasswordInput
                     leftSection={<FaLock />}
                     radius="lg"
@@ -90,85 +125,111 @@ export default function SignUp() {
                   />
                 </div>
                 <div className="password-confirmation-input">
-                    <PasswordInput
+                  <PasswordInput
                     leftSection={<FaLock />}
                     radius="lg"
                     placeholder="Confirmar contraseña"
                     value={passwordConfirmation}
                     onChange={handlePasswordConfirmationChange}
                     error={!isPasswordConfirmationValid || !isPasswordMatch}
-                    />
+                  />
                 </div>
                 <div className="phone-input">
-                    <Input
-                        leftSection={<MdEmail />}
-                        radius="lg"
-                        placeholder="Número de teléfono"
-                        value={email}
-                        onChange={handleEmailChange}
-                        error={!isEmailValid}
-                    />
+                  <Input
+                    leftSection={<FaPhone />}
+                    radius="lg"
+                    placeholder="Número de teléfono"
+                    value={phone}
+                    onChange={handlePhoneNumber}
+                    onKeyPress={(event) => {
+                      if (!/[0-9]/.test(event.key)) {
+                        event.preventDefault();
+                      }
+                    }}
+                    error={!isPhoneValid}
+                  />
                 </div>
-               </div> 
-                <div className="sign-up-inputs-2">
-                  <div className="name-input">
-                    <Input
-                      leftSection={<MdEmail />}
-                      radius="lg"
-                      placeholder="Nombre"
-                      value={email}
-                      onChange={handleEmailChange}
-                      error={!isEmailValid}
-                    />
-                  </div>
-                  <div className="first-last-name-input">
-                    <Input
-                        leftSection={<MdEmail />}
-                        radius="lg"
-                        placeholder="Primer apellido"
-                        value={email}
-                        onChange={handleEmailChange}
-                        error={!isEmailValid}
-                    />
-                  </div>
-                  <div className="second-last-name-input">
-                    <Input
-                        leftSection={<MdEmail />}
-                        radius="lg"
-                        placeholder="Segundo apellido"
-                        value={email}
-                        onChange={handleEmailChange}
-                        error={!isEmailValid}
-                    />
-                  </div>
-                  <div className="dni-input">
-                    <Input
-                        leftSection={<MdEmail />}
-                        radius="lg"
-                        placeholder="DNI"
-                        value={email}
-                        onChange={handleEmailChange}
-                        error={!isEmailValid}
-                    />
+              </div>
+              <div className="sign-up-inputs-2">
+                <div className="name-input">
+                  <Input
+                    leftSection={<CgProfile />}
+                    radius="lg"
+                    placeholder="Nombres"
+                    value={name}
+                    onChange={handleName}
+                    onKeyPress={(event) => {
+                      if (!/[a-zA-Z]/.test(event.key)) {
+                        event.preventDefault();
+                      }
+                    }}
+                  />
                 </div>
-            </div>
-              
+                <div className="first-last-name-input">
+                  <Input
+                    leftSection={<CgProfile />}
+                    radius="lg"
+                    placeholder="Primer apellido"
+                    value={first_last_name}
+                    onChange={handleFirstLastName}
+                    onKeyPress={(event) => {
+                      if (!/[a-zA-Z]/.test(event.key)) {
+                        event.preventDefault();
+                      }
+                    }}
+                  />
+                </div>
+                <div className="second-last-name-input">
+                  <Input
+                    leftSection={<CgProfile />}
+                    radius="lg"
+                    placeholder="Segundo apellido"
+                    value={second_last_name}
+                    onChange={handleSecondLastName}
+                    onKeyPress={(event) => {
+                      if (!/[a-zA-Z]/.test(event.key)) {
+                        event.preventDefault();
+                      }
+                    }}
+                  />
+                </div>
+                <div className="dni-input">
+                  <Input
+                    leftSection={<HiIdentification />}
+                    radius="lg"
+                    placeholder="DNI"
+                    value={dni}
+                    onChange={handleDni}
+                    onKeyPress={(event) => {
+                      if (!/[0-9]/.test(event.key)) {
+                        event.preventDefault();
+                      }
+                    }}
+                    error={dni.length !== 8}
+                  />
+                </div>
+              </div>
+
             </div>
             <div className="sign-up-button">
               <Button
-                text="Registrarse"
                 radius="lg"
-                onClick={() => {}}
+                onClick={() => { }}
                 disabled={
                   !isEmailValid ||
                   !isPasswordValid ||
                   !isPasswordConfirmationValid ||
                   !isPasswordMatch
                 }
-              />
+                style={{ width: "100%" }}
+                color="indigo"
+              >
+                Registrarse
+              </Button>
             </div>
             <div className="sign-up-login">
-              <a href="/">¿Ya tienes cuenta? Inicia sesión</a>
+              <a href="/login">¿Ya tienes cuenta? Inicia sesión</a>
+              <a href="/forget_password">¿Olvidaste tu contraseña?</a>
             </div>
           </div>
         </div>
