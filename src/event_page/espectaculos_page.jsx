@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import cuco_pasarela from '../assets/cuco_pasarela.jpg';
 import nbhd_pasarela from '../assets/nbhd_pasarela.jpg';
 import top_pasarela from '../assets/top_pasarela.jpg';
+import { useEffect } from "react";
 
 const cards = [
     {
@@ -832,6 +833,9 @@ const ItemsPerPage = 6 ;
 
 function Espectaculos() {
     const navigate = useNavigate();
+    useEffect(() => {
+        window.scrollTo(0, 0);
+      }, []);
 
     const slides = cards.map((card, index) => (
         <Card style={{width:350, flexDirection:'row-wrap', display:'flex' }} key={index} shadow="sm" padding="lg" radius="md" withBorder>

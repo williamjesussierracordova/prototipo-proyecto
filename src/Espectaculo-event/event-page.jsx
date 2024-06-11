@@ -17,6 +17,9 @@ function EventPage(  ) { /* necesito que reciba un parametro para saber que even
   const { card } = location.state;
   const navigate = useNavigate();
   const { idEvento } = useParams();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   console.log(idEvento);
   useEffect(() => {

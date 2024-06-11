@@ -1,7 +1,7 @@
 import "./pasarela_entrada.css";
 import { useLocation } from "react-router-dom";
 import mapa from "../assets/mapa.png";
-import { Input, NumberInput, Table } from "@mantine/core";
+import {  Table } from "@mantine/core";
 import { FaSquare } from "react-icons/fa6";
 import { Select } from "@mantine/core";
 import { useState } from "react";
@@ -9,8 +9,8 @@ import { useEffect } from "react";
 import { Button } from "@mantine/core";
 import { IoTicketOutline } from "react-icons/io5";
 import { Accordion } from "@mantine/core";
-import { TextInput } from "@mantine/core";
-import { Form, isInRange, isNotEmpty, useForm } from '@mantine/form';
+// import { TextInput } from "@mantine/core";
+// import { Form, isInRange, isNotEmpty, useForm } from '@mantine/form';
 import { Modal } from "@mantine/core";
 import { useDisclosure } from '@mantine/hooks';
 
@@ -182,10 +182,12 @@ const Pasarela_Entrada = () => {
     const [precio, setPrecio] = useState(null);
     const [cantidad, setCantidad] = useState(null);
     const [entradas, setEntradas] = useState([]);
-    const [property, setProperty] = useState([]);
-    const [nextProperty, setNextProperty] = useState(null);
+    // const [property, setProperty] = useState([]);
+    // const [nextProperty, setNextProperty] = useState(null);
     const [opened, { open, close }] = useDisclosure(false);
-
+    useEffect(() => {
+        window.scrollTo(0, 0);
+      }, []);
 
     useEffect(() => {
         setTipoEntrada(null);
@@ -280,30 +282,30 @@ const Pasarela_Entrada = () => {
         }
     };
 
-    const numeroEntradas = entradas.reduce(
-        (acc, entrada) => acc + entrada.cantidad,
-        0
-    );
+    // const numeroEntradas = entradas.reduce(
+    //     (acc, entrada) => acc + entrada.cantidad,
+    //     0
+    // );
 
-    const form = useForm({
-        mode: 'uncontrolled',
-        initialValues: {
-            name: '',
-            first_last_name: '',
-            second_last_name: '',
-            phone: '',
-            email: '',
-            dni: '',
-        },
-        validate: {
-            email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
-            name: (value) => (isNotEmpty(value) ? null : 'Name is required'),
-            first_last_name: (value) => (isNotEmpty(value) ? null : 'First last name is required'),
-            second_last_name: (value) => (isNotEmpty(value) ? null : 'Second last name is required'),
-            phone: (value) => (isNotEmpty(value) && value.length == 9 ? null : 'Phone is required'),
-            dni: (value) => (isNotEmpty(value) && value.length == 8 ? null : 'DNI is required'),
-        }
-    });
+    // const form = useForm({
+    //     mode: 'uncontrolled',
+    //     initialValues: {
+    //         name: '',
+    //         first_last_name: '',
+    //         second_last_name: '',
+    //         phone: '',
+    //         email: '',
+    //         dni: '',
+    //     },
+    //     validate: {
+    //         email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
+    //         name: (value) => (isNotEmpty(value) ? null : 'Name is required'),
+    //         first_last_name: (value) => (isNotEmpty(value) ? null : 'First last name is required'),
+    //         second_last_name: (value) => (isNotEmpty(value) ? null : 'Second last name is required'),
+    //         phone: (value) => (isNotEmpty(value) && value.length == 9 ? null : 'Phone is required'),
+    //         dni: (value) => (isNotEmpty(value) && value.length == 8 ? null : 'DNI is required'),
+    //     }
+    // });
 
     const accordion_pasarela = [
         {
@@ -543,52 +545,52 @@ const Pasarela_Entrada = () => {
         //         </div>
         // }
     ];
-    const accordion_pasarela2 = [
-        {
-            emoji: <IoTicketOutline />,
-            value: "Ingresar datos de las entradas",
-            description: (
-                <div className="accordion_pasarela_datos_entrada">
-                    {/* necesito tener tantos formularios como la variable numeroEntradas */}
-                    {Array.from({ length: numeroEntradas }).map((_, index) => (
-                        <form key={index}>
-                            <div className="formulario_entradas">
-                                <div className="datos_entrada">
-                                    <h2
-                                        style={{
-                                            fontSize: "20px",
-                                            fontWeight: "700",
-                                            margin: "1rem 2rem",
-                                        }}
-                                    >
-                                        Datos de la entrada {index + 1}
-                                    </h2>
-                                    <div className="datos_entrada_formulario">
-                                        <h1>Sector:</h1>
-                                        <h1>Tipo:</h1>
-                                    </div>
-                                </div>
-                                <div className="de_formulario"></div>
-                            </div>
-                        </form>
-                    ))}
-                    {/* <div className='datos_entrada_form'>
-                    <h2 style={{fontSize:'20px', fontWeight:'700',margin:'1rem 2rem'}}>Datos de la entrada 1</h2>
-                    <div className="datos_entrada_formulario">
-                        <div className="datos_entrada_formulario_input">
-                            <label htmlFor="nombre">Nombre</label>
-                            <input type="text" id="nombre" name="nombre" />
-                            <label htmlFor="apellido">Apellido</label>
-                            <input type="text" id="apellido" name="apellido" />
-                            <label htmlFor="dni">DNI</label>
-                            <input type="text" id="dni" name="dni" />
-                        </div>
-                    </div>
-                </div> */}
-                </div>
-            ),
-        },
-    ];
+    // const accordion_pasarela2 = [
+    //     {
+    //         emoji: <IoTicketOutline />,
+    //         value: "Ingresar datos de las entradas",
+    //         description: (
+    //             <div className="accordion_pasarela_datos_entrada">
+    //                 {/* necesito tener tantos formularios como la variable numeroEntradas */}
+    //                 {Array.from({ length: numeroEntradas }).map((_, index) => (
+    //                     <form key={index}>
+    //                         <div className="formulario_entradas">
+    //                             <div className="datos_entrada">
+    //                                 <h2
+    //                                     style={{
+    //                                         fontSize: "20px",
+    //                                         fontWeight: "700",
+    //                                         margin: "1rem 2rem",
+    //                                     }}
+    //                                 >
+    //                                     Datos de la entrada {index + 1}
+    //                                 </h2>
+    //                                 <div className="datos_entrada_formulario">
+    //                                     <h1>Sector:</h1>
+    //                                     <h1>Tipo:</h1>
+    //                                 </div>
+    //                             </div>
+    //                             <div className="de_formulario"></div>
+    //                         </div>
+    //                     </form>
+    //                 ))}
+    //                 {/* <div className='datos_entrada_form'>
+    //                 <h2 style={{fontSize:'20px', fontWeight:'700',margin:'1rem 2rem'}}>Datos de la entrada 1</h2>
+    //                 <div className="datos_entrada_formulario">
+    //                     <div className="datos_entrada_formulario_input">
+    //                         <label htmlFor="nombre">Nombre</label>
+    //                         <input type="text" id="nombre" name="nombre" />
+    //                         <label htmlFor="apellido">Apellido</label>
+    //                         <input type="text" id="apellido" name="apellido" />
+    //                         <label htmlFor="dni">DNI</label>
+    //                         <input type="text" id="dni" name="dni" />
+    //                     </div>
+    //                 </div>
+    //             </div> */}
+    //             </div>
+    //         ),
+    //     },
+    // ];
 
     const items = accordion_pasarela.map((item) => (
         <Accordion.Item key={item.value} value={item.value} >

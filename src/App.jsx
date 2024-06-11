@@ -47,7 +47,7 @@ import Espectaculo_page from './espectaculo_page.jsx';
 import LoginPage from './login_page.jsx';
 import SignUp from './signUp/signUp.jsx';
 import ForgetPassword from './forget_password/forget_password.jsx';
-
+import Profile_Page from './perfil.jsx';
 function App(){
     return (
         <>
@@ -65,6 +65,7 @@ function App(){
                 <Route path='*' element={<h1>404 Not Found</h1>} />
                 <Route path='/registrar' element={<SignUp />} />
                 <Route path='/forget_password' element={<ForgetPassword />} />
+                <Route path='/profile' element={<Profile_Page/>} />
             </Routes>
         </div>
         </>

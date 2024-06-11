@@ -1,4 +1,3 @@
-import React from "react";
 import './info.css';
 import gtn_fuera from "../assets/gtn_fuera.jpg";
 

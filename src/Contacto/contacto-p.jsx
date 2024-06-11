@@ -3,11 +3,16 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { CiFacebook } from "react-icons/ci";
 import { FaXTwitter } from "react-icons/fa6";
 import { FaInstagram } from "react-icons/fa";
+import { useEffect } from "react";
 import { FaYoutube } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
 import "./contacto-p.css";
 
 const Contacto = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="contacto__p section__padding">
       <div className="contacto__p__div">
