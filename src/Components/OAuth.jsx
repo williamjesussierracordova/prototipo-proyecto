@@ -6,6 +6,7 @@ import { Button } from '@mantine/core';
 import { signInSuccess } from '../Redux/User/userSlice';
 import { FcGoogle } from 'react-icons/fc';
 import { FaTwitter } from "react-icons/fa";
+import { readUser, readUserFromEmail, writeUser } from '../Firebase/UserManage/userController.js';
 
 
 export default function OAuth() {
@@ -13,16 +14,32 @@ export default function OAuth() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+    function getRandomInt(max) {
+        return Math.floor(Math.random() * max);
+    }
+
     const handleGoogleClick = async () => {
         const provider = new GoogleAuthProvider();
         provider.setCustomParameters({ prompt: 'select_account' });
 
         try {
             const resultsFromGoogle = await signInWithPopup(auth, provider);
+            let userData = await readUserFromEmail(resultsFromGoogle._tokenResponse.email);
 
-            if (resultsFromGoogle) {
-                console.log(resultsFromGoogle);
-                dispatch(signInSuccess(resultsFromGoogle));
+            if (userData === null) {
+                let randomNumber = getRandomInt(99999999);
+                while (readUser(randomNumber) == null) {
+                    randomNumber = getRandomInt(99999999);
+                }
+                writeUser(randomNumber,resultsFromGoogle._tokenResponse.email, '', '', resultsFromGoogle._tokenResponse.firstName, resultsFromGoogle._tokenResponse.lastName, '', '00000000')
+                userData = await readUserFromEmail(resultsFromGoogle._tokenResponse.email);
+                dispatch(signInSuccess(userData));
+                console.log('Usuario creado');
+                navigate('/');
+            }
+            else {
+                dispatch(signInSuccess(userData));
+                console.log('Usuario ya existente');
                 navigate('/');
             }
         }
@@ -51,22 +68,22 @@ export default function OAuth() {
 
     return (
         <div>
-        <Button onClick={handleGoogleClick}
-            leftSection={<FcGoogle size={14} />}
-            radius="md"
-            variant="default"
-            style={{ width: '100%', marginBottom: '10px'}}
-        >
-            Google
-        </Button>
-        <Button onClick={handleTwitterClick}
-            leftSection={<FaTwitter size={14} color='#1D9BF0'/>}
-            radius="md"
-            variant="default"
-            style={{ width: '100%' }}
-        >
-            Twitter
-        </Button>
+            <Button onClick={handleGoogleClick}
+                leftSection={<FcGoogle size={14} />}
+                radius="md"
+                variant="default"
+                style={{ width: '100%', marginBottom: '10px' }}
+            >
+                Google
+            </Button>
+            <Button onClick={handleTwitterClick}
+                leftSection={<FaTwitter size={14} color='#1D9BF0' />}
+                radius="md"
+                variant="default"
+                style={{ width: '100%' }}
+            >
+                Twitter
+            </Button>
         </div>
     )
 

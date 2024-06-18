@@ -11,6 +11,7 @@ import { signInStart, signInSuccess, signInFailure } from "../Redux/User/userSli
 import { useNavigate } from "react-router-dom";
 import { app } from "../Firebase/firebase";
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { readUserFromEmail } from "../Firebase/UserManage/userController";
 
 const auth = getAuth(app);
 
@@ -19,7 +20,6 @@ export default function Login() {
   const [isEmailValid, setIsEmailValid] = useState(true);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
 
   const validateEmail = (email) => {
     const re =
@@ -38,15 +38,12 @@ export default function Login() {
     try {
       const correo = e.target.email.value;
       const password = e.target.password.value;
-      console.log(correo);
-      console.log(password);
 
       await signInWithEmailAndPassword(auth, correo, password);
-
+      let userData = await readUserFromEmail(correo);
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          dispatch(signInSuccess(user));
-          console.log(user);
+          dispatch(signInSuccess(userData));
           navigate('/');
         }
         else {
@@ -56,8 +53,7 @@ export default function Login() {
       });
 
     } catch (error) {
-      dispatch(signInFailure(error.message));
-      
+      dispatch(signInFailure(error.message)); 
     }
   }
 

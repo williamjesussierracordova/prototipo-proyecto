@@ -1,13 +1,35 @@
 import {db} from '../firebase.js'
-import { set, ref, onValue } from "firebase/database";
+import { set, ref, get } from "firebase/database";
 
-export function writeManage(idImage,urlImage,heightImage,widthImage,fallbackImage){
+export function writeImage(idImage,urlImage,heightImage,widthImage,fallbackImage,typeImage){
     set(ref(db, 'images/' + idImage ), {
         urlImage: urlImage,
         heightImage: heightImage,
         widthImage: widthImage,
-        fallbackImage: fallbackImage
+        fallbackImage: fallbackImage,
+        typeImage: typeImage
     });
 }
 
-writeManage('1','https://firebasestorage.googleapis.com/v0/b/ticketmaster-clone.appspot.com/o/1.jpg?alt=media&token=4b0b5c4b-7e0b-4c2d-8e4a-7d2e9a0e0e6e','100','100','tyler tocando el piano')
+export async function readImage(idImage){
+    const imageRFC = ref(db, 'images/' + idImage);
+    try {
+        const snapshot = await get(imageRFC);
+        let data = snapshot.val();
+        return data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+
+
+// writeImage(1,'C:\\Users\\willi\\Desktop\\react\\prototipo-proyecto\\src\\assets\\clancy_tour.jpg',600,1600,'clancy tour','slider')
+// writeImage(2,'C:\\Users\\willi\\Desktop\\react\\prototipo-proyecto\\src\\assets\\top_pasarela.jpg',1080,1920,'top pasarela','pasarela')
+// writeImage(3,'C:\\Users\\willi\\Desktop\\react\\prototipo-proyecto\\src\\assets\\top_pasarela.jpg',1080,1920,'top mobile','mobile')
+// writeImage(4,'C:\\Users\\willi\\Desktop\\react\\prototipo-proyecto\\src\\assets\\cuco_slider.jpg',600,1600,'cuco slider','slider')
+// writeImage(5,'C:\\Users\\willi\\Desktop\\react\\prototipo-proyecto\\src\\assets\\cuco_pasarela.jpg',1080,1920,'cuco pasarela','pasarela')
+// writeImage(6,'C:\\Users\\willi\\Desktop\\react\\prototipo-proyecto\\src\\assets\\cuco_mobile.jpg',450,675,'cuco mobile','mobile')
+// writeImage(7,'C:\\Users\\willi\\Desktop\\react\\prototipo-proyecto\\src\\assets\\nbhd_slider.jpg',600,1600,'nbhd slider','slider')
+// writeImage(8,'C:\\Users\\willi\\Desktop\\react\\prototipo-proyecto\\src\\assets\\nbhd_pasarela.jpg',1080,1920,'nbhd pasarela','pasarela')
+// writeImage(9,'C:\\Users\\willi\\Desktop\\react\\prototipo-proyecto\\src\\assets\\nbhd_mobile.webp',800,800,'nbhd mobile','mobile')

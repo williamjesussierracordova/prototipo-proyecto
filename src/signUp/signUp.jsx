@@ -8,8 +8,8 @@ import "../signUp/signUp.css";
 import { FaPhone } from "react-icons/fa6";
 import { HiIdentification } from "react-icons/hi2";
 import { CgProfile } from "react-icons/cg";
-import { writeUser } from "../Firebase/UserManage/userController";
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import { readUser, writeUser } from "../Firebase/UserManage/userController";
+import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { app } from "../Firebase/firebase";
 import { getAuth } from "firebase/auth";
 import { useDispatch } from "react-redux";
@@ -86,16 +86,24 @@ export default function SignUp() {
     setDni(dni);
   };
 
+  function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+  }
+
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     try{
       await createUserWithEmailAndPassword(auth, email, password);
-      
+      let randomNumber = getRandomInt(99999999);
+          while(readUser(randomNumber) == null){
+            randomNumber = getRandomInt(99999999);
+          } 
+          writeUser(randomNumber,email, password, phone, name, first_last_name, second_last_name, dni);
+          let userData = await readUser(randomNumber);
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          writeUser(email, password, phone, name, first_last_name, second_last_name, dni);
-          dispatch(signInSuccess(user));
-          console.log(user);
+          dispatch(signInSuccess(userData));
+          console.log(userData);
           navigate('/');
         }
         else {
