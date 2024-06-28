@@ -44,5 +44,5 @@ export async function readAtraction(idAttraction){
 }
 
 // writeAtraction(1,'The Clancy Tour','http://localhost:5173/eventos/1',1,[1,2,3,8])
-writeAtraction(3,'The NBHD Tour','http://localhost:5173/eventos/2',1,[1,2,3,6,20,100])
+//writeAtraction(3,'The NBHD Tour','http://localhost:5173/eventos/2',1,[1,2,3,6,20,100])
 // writeAtraction(2,'Cuco Tour','http://localhost:5173/eventos/3',12,[19,8,33])

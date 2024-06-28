@@ -5,8 +5,6 @@ import { TiThMenu } from "react-icons/ti";
 import { IoCloseCircle } from "react-icons/io5";
 import { useState } from "react";
 
-
-
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
 

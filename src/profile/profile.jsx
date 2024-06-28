@@ -6,14 +6,16 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import { CiLogout } from "react-icons/ci";
 import { reauthenticateWithCredential, signOut, updatePassword } from 'firebase/auth';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { app } from '../Firebase/firebase';
+import { app, db } from '../Firebase/firebase';
 import { useDispatch } from 'react-redux';
 import { signInSuccess, signoutSuccess } from '../Redux/User/userSlice';
 import { getAuth } from 'firebase/auth';
 import { EmailAuthProvider } from 'firebase/auth/web-extension';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { updateUserDNI, updateUserPassword, updateUserPhone } from '../Firebase/UserManage/userController';
+import { onValue, ref } from 'firebase/database';
+import { readPromoter } from '../Firebase/promotersManage/promotersManage';
 const auth = getAuth(app);
 
 export default function Profile() {
@@ -111,6 +113,25 @@ export default function Profile() {
         }
     }
 
+    const [events, setEvents] = useState([]);
+    const eventsFirebase = () => {
+      try{
+        const eventsReference = ref(db, 'events/');
+        onValue(eventsReference, (snapshot) => {
+          const data = snapshot.val();
+          setEvents(data);
+
+        });
+      }
+      catch(error){
+        console.error(error);
+      }
+    }
+  
+    useEffect(() => {
+        eventsFirebase();
+      }, []);
+  
     
 
     return (
@@ -121,7 +142,7 @@ export default function Profile() {
             <div className='profile_container'>
                 <div className='profile_buttons'>
                     <Button onClick={handleShowPerfil} leftSection={<CgProfile />} variant='light' radius='xs' size="md" className='profile_button' fullWidth style={{ border: '1px solid black' }} >Mi perfil</Button>
-                    <Button onClick={handleShowEntradas} leftSection={<IoTicketOutline />} variant='light' radius='xs' size="md" className='profile_button' fullWidth style={{ border: '1px solid black' }}>Mis entradas</Button>
+                    <Button onClick={eventsFirebase} leftSection={<IoTicketOutline />} variant='light' radius='xs' size="md" className='profile_button' fullWidth style={{ border: '1px solid black' }}>Mis entradas</Button>
                     <Button onClick={handleShowCambiarContraseña} leftSection={<RiLockPasswordLine />} variant='light' radius='xs' size="md" className='profile_button' fullWidth style={{ border: '1px solid black' }}>Cambiar contraseña</Button>
                     <Button leftSection={<CiLogout />} variant='light' radius='xs' size="md" className='profile_button' color='red' fullWidth style={{ border: '1px solid black' }} onClick={handleSignOut}>Cerrar sesion</Button>
                 </div>

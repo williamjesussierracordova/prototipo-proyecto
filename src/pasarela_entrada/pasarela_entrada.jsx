@@ -13,6 +13,8 @@ import { Accordion } from "@mantine/core";
 // import { Form, isInRange, isNotEmpty, useForm } from '@mantine/form';
 import { Modal } from "@mantine/core";
 import { useDisclosure } from '@mantine/hooks';
+import { useSelector } from 'react-redux';
+import { readOfferDescription } from "../Firebase/offersManage/offersManage";
 
 const precios = [
     {
@@ -176,7 +178,7 @@ const precios = [
 const Pasarela_Entrada = () => {
     const location = useLocation();
     const { card } = location.state;
-
+    const { currentUser } = useSelector(state => state.user);
     const [sector, setSector] = useState(null);
     const [tipoEntrada, setTipoEntrada] = useState(null);
     const [precio, setPrecio] = useState(null);
@@ -216,41 +218,7 @@ const Pasarela_Entrada = () => {
         </Table.Tr>
     ));
 
-    //   const agregarEntrada = () => {
-    //     setEntradas([...entradas, { sector, tipoEntrada, precio, cantidad }]);
-    // };
-
-    // const agregarEntrada = () => {
-    //     const existingEntrada = entradas.find(
-    //         (entrada) => entrada.sector === sector && entrada.tipoEntrada === tipoEntrada
-    //     );
-
-    //     if (existingEntrada) {
-    //         existingEntrada.cantidad = parseInt(existingEntrada.cantidad) + parseInt(cantidad);
-    //         const totalEntradas = entradas.reduce((acc, entrada) => acc + entrada.cantidad, 0);
-    //         const nuevaCantidad = parseInt(totalEntradas) + parseInt(cantidad);
-
-    //         if (nuevaCantidad <= 6) {
-    //             setEntradas([...entradas]);
-    //         } else {
-    //             // Handle exceeding maximum entradas
-    //         }
-
-    //     // } else {
-    //     //     setEntradas([...entradas, { sector, tipoEntrada, precio, cantidad }]);
-    //     // }
-    //     //     // Handle existing entrada
-    //     } else {
-    //         const totalEntradas = entradas.reduce((acc, entrada) => acc + entrada.cantidad, 0);
-    //         const nuevaCantidad = parseInt(totalEntradas) + parseInt(cantidad);
-
-    //         if (nuevaCantidad <= 6) {
-    //             setEntradas([...entradas, { sector, tipoEntrada, precio, cantidad }]);
-    //         } else {
-    //             // Handle exceeding maximum entradas
-    //         }
-    //     }
-    // };
+   
 
     const agregarEntrada = () => {
         const existingEntrada = entradas.find(
@@ -282,30 +250,52 @@ const Pasarela_Entrada = () => {
         }
     };
 
-    // const numeroEntradas = entradas.reduce(
-    //     (acc, entrada) => acc + entrada.cantidad,
-    //     0
-    // );
+   // Setear la informacion para guardar el recibo
 
-    // const form = useForm({
-    //     mode: 'uncontrolled',
-    //     initialValues: {
-    //         name: '',
-    //         first_last_name: '',
-    //         second_last_name: '',
-    //         phone: '',
-    //         email: '',
-    //         dni: '',
-    //     },
-    //     validate: {
-    //         email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
-    //         name: (value) => (isNotEmpty(value) ? null : 'Name is required'),
-    //         first_last_name: (value) => (isNotEmpty(value) ? null : 'First last name is required'),
-    //         second_last_name: (value) => (isNotEmpty(value) ? null : 'Second last name is required'),
-    //         phone: (value) => (isNotEmpty(value) && value.length == 9 ? null : 'Phone is required'),
-    //         dni: (value) => (isNotEmpty(value) && value.length == 8 ? null : 'DNI is required'),
-    //     }
-    // });
+   //necesito coger la informacion de las entradas y guardarlas en un array
+
+   const recorrerEntradas = () => {
+         let entradasArray = [];
+            entradas.map((entrada) => {
+                if (entrada.cantidad >1){
+                    for (let i = 0; i < entrada.cantidad; i++) {
+                        entradasArray.push({
+                            sector: entrada.sector,
+                            tipoEntrada: entrada.tipoEntrada,
+                            precio: entrada.precio,
+                            cantidad: 1,
+                        });
+                    }
+                } else if (entrada.cantidad === 1){
+                    entradasArray.push({
+                        sector: entrada.sector,
+                        tipoEntrada: entrada.tipoEntrada,
+                        precio: entrada.precio,
+                        cantidad: entrada.cantidad,
+                    });
+                }
+                }
+                
+            )
+            return entradasArray;
+        };
+            
+    // guardar en la base de datos
+
+    const guardarRecibo = async () => {
+        let idEvent = card.Id;
+        let idUser = currentUser.idUser;
+        let entradas = recorrerEntradas();
+        for (let entrada of entradas) {
+            let oferta = await readOfferDescription(entrada.sector);
+            let idOferta = oferta.idOffer;
+            
+        }
+    }
+
+    useEffect(() => {
+        guardarRecibo();
+    }, [entradas]);
 
     const accordion_pasarela = [
         {
@@ -387,12 +377,7 @@ const Pasarela_Entrada = () => {
                         <div className="pasarela_resument_tabla">
                             <Table striped withRowBorders={true}>
                                 <Table.Thead style={{ color: "black" }}>
-                                    {/* <Table.Tr>
-                                        <Table.Th>Sector</Table.Th>
-                                        <Table.Th>Tipo</Table.Th>
-                                        <Table.Th>Precio</Table.Th>
-                                        <Table.Th>Cantidad</Table.Th>
-                                    </Table.Tr> */}
+                                    
                                 </Table.Thead>
                                 <Table.Tbody>
                                     {entradas.map((entrada, index) => (
@@ -463,87 +448,15 @@ const Pasarela_Entrada = () => {
                             title="Pasarela de pago"
                             yOffset="120px"
                         >
-                            <h1>izipay </h1>
+                            {currentUser!=null ?
+                            <h1>Usuario: {currentUser.email}</h1>
+                            : <h1>Inicie sesion para poder comprar</h1>    
+                        }
                         </Modal>
                     </div>
                 </div>
             ),
         },
-        // {
-        //     emoji: <IoTicketOutline />,
-        //     value: "Ingresar datos de las entradas",
-        //     description:
-        //         <div className="accordion_pasarela_datos_entrada">
-        //             {/* necesito tener tantos formularios como la variable numeroEntradas */}
-        //             {entradas.map((entrada) => (
-        //                 Array.from({ length: entrada.cantidad }).map((_, index) => (
-        //                     <form key={index} onSubmit={form.onSubmit(console.log)}>
-        //                         <div className="formulario_entradas">
-        //                             <div className="datos_entrada">
-        //                                 <h2>
-        //                                     Datos de la entrada {index + 1}
-        //                                 </h2>
-        //                                 <div className="datos_entrada_formulario">
-        //                                     <p>Sector: {entrada.sector}</p>
-        //                                     <p>Tipo: {entrada.tipoEntrada}</p>
-        //                                 </div>
-        //                             </div>
-        //                             <div className="de_formulario">
-        //                                 <TextInput
-        //                                     placeholder="Ingresar nombre"
-        //                                     key={form.key('name')}
-        //                                     {...form.getInputProps('name')}
-        //                                     style={{ padding: '0.4rem 0' }}
-        //                                     withAsterisk
-        //                                 />
-        //                                 <TextInput
-        //                                     placeholder="Ingresar primer apellido"
-        //                                     key={form.key('first_last_name')}
-        //                                     {...form.getInputProps('name')}
-        //                                     withAsterisk
-        //                                     style={{ padding: '0.4rem 0' }}
-        //                                 />
-        //                                 <TextInput
-        //                                     placeholder="Ingresar segundo apellido"
-        //                                     key={form.key('second_last_name')}
-        //                                     {...form.getInputProps('name')}
-        //                                     style={{ padding: '0.4rem 0' }}
-        //                                     withAsterisk
-        //                                 />
-        //                                 <TextInput
-        //                                     type="number"
-        //                                     placeholder="Ingresar DNI"
-        //                                     key={form.key('dni')}
-        //                                     {...form.getInputProps('dni')}
-        //                                     style={{ padding: '0.4rem 0' }}
-        //                                     withAsterisk
-        //                                 />
-        //                                 <NumberInput
-        //                                     type="number"
-        //                                     placeholder="Ingrese su telefono"
-        //                                     key={form.key('phone')}
-        //                                     {...form.getInputProps('age')}
-        //                                     style={{ padding: '0.4rem 0' }}
-        //                                     withAsterisk
-        //                                 />
-        //                                 <TextInput
-        //                                     placeholder="Ingrese su correo"
-        //                                     key={form.key('email')}
-        //                                     {...form.getInputProps('email')}
-        //                                     style={{ padding: '0.4rem 0' }}
-        //                                     withAsterisk
-        //                                 />
-
-        //                             </div>
-        //                         </div>
-
-        //                     </form>
-        //                 ))))}
-        //             <Button type="submit" mt="sm" style={{ alignItems: 'center', display: 'flex' }}>
-        //                 Submit
-        //             </Button>
-        //         </div>
-        // }
     ];
     // const accordion_pasarela2 = [
     //     {
@@ -601,12 +514,6 @@ const Pasarela_Entrada = () => {
         </Accordion.Item>
     ));
 
-    // const items2 = accordion_pasarela2.map((item) => (
-    //     <Accordion.Item key={item.value} value={item.value} >
-    //       <Accordion.Control icon={item.emoji} display={1!=1}>{item.value}</Accordion.Control>
-    //       <Accordion.Panel>{item.description}</Accordion.Panel>
-    //     </Accordion.Item>
-    //   ));
 
     return (
         <div>
@@ -655,119 +562,12 @@ const Pasarela_Entrada = () => {
             <h2 style={{ fontSize: "20px", fontWeight: "700", margin: "1rem 2rem" }}>
                 Selecciona tus entradas
             </h2>
-            {/* <div className="pasarela_seleccion_entrada">
-                <Select
-                    style={{width:'250px'}}
-                    checkIconPosition="right"
-                    placeholder="Sector"
-                    data={
-                        precios.map((element) => (
-                            element.sector 
-                        ))
-                        }
-                    value={sector}
-                    onChange={setSector}
-                />
-                <Select
-                    style={{width:'250px'}}
-                    checkIconPosition="right"
-                    placeholder="Tipo de entrada"
-                    value={tipoEntrada}
-                    data={['Conadis', 'Regular']}
-                    onChange={setTipoEntrada}
-                    disabled={!sector}
-                    allowDeselect={false}
-                />
-                
-                <Select
-                    style={{width:'250px'}}
-                    checkIconPosition="right"
-                    placeholder="Precio"
-                    data={
-                        sector && tipoEntrada
-                            ? precios
-                                .filter((p) => p.sector === sector)
-                                .map((p) => ({
-                                    value: tipoEntrada === 'Conadis' ? p.precio_conadis : p.precio_regular,
-                                    label: tipoEntrada === 'Conadis' ? `S/. ${p.precio_conadis}` : `S/. ${p.precio_regular}`,
-                                }))
-                            : []
-                    } 
-                    value={precio}
-                    onChange={setPrecio}
-                    disabled={!tipoEntrada}
-                    allowDeselect={false}
-                />
-
-                <Select
-                    style={{width:'250px'}}
-                    checkIconPosition="right"
-                    placeholder="Cantidad"
-                    data={['1','2','3','4']}
-                    value={cantidad}
-                    onChange={setCantidad}
-                    disabled={!precio}
-                    allowDeselect={false}
-                />
-                <Button variant="filled" color='red' size="md" radius="lg"
-                    disabled={!sector || !tipoEntrada || !precio || !cantidad}
-                    onClick={agregarEntrada}
-                >
-                    Agregar
-                </Button>
-            </div> */}
+            
             <div className="accordion_pasarela">
                 <Accordion variant="separated" radius="lg" defaultValue="Seleccion de entradas" >
                     {items}
                 </Accordion>
-
-                {/* <Accordion variant="separated" radius="lg" defaultValue="Apples" >
-                    {items2}
-                </Accordion> */}
             </div>
-            {/* <div className="pasarela_resumen">
-                <h2 style={{fontSize:'20px', fontWeight:'700'}}>Resumen de entradas  </h2>
-                <div className="pasarela_resument_tabla">
-                    <Table  striped withRowBorders={true}>
-                        <Table.Thead style={{color:"white"}}>
-                            <Table.Tr>
-                                <Table.Th>Sector</Table.Th>
-                                <Table.Th>Tipo</Table.Th>
-                                <Table.Th>Precio</Table.Th>
-                                <Table.Th>Cantidad</Table.Th>
-                            </Table.Tr>
-                        </Table.Thead>
-                        <Table.Tbody>
-                            {entradas.map((entrada, index) => (
-                                <Table.Tr key={index}>
-                                    <Table.Td>{entrada.sector}</Table.Td>
-                                    <Table.Td>{entrada.tipoEntrada}</Table.Td>
-                                    <Table.Td style={{textWrap:'nowrap'}}>S/. {entrada.precio}</Table.Td>
-                                    <Table.Td>{entrada.cantidad}</Table.Td>
-                                    <Table.Td><Button variant="transparent" color="red" 
-                                    onClick={() => setEntradas(entradas.filter((_, i) => i !== index))}
-                                    >eliminar</Button></Table.Td>
-                                </Table.Tr>
-                            ))}
-                        </Table.Tbody>
-                        <Table.Tfoot>
-                            <Table.Tr>
-                                <Table.Td colSpan={2} style={{fontWeight:'bold', fontSize:'20px'}}>Total</Table.Td>
-                                <Table.Td colSpan={2} style={{fontWeight:'bold', fontSize:'20px'}}>
-                                    S/. {entradas.reduce((acc, entrada) => acc + entrada.precio * entrada.cantidad, 0)}
-                                </Table.Td>
-                            </Table.Tr>
-                        </Table.Tfoot>
-                    </Table>
-                </div>
-                <div className="pasarela_resumen_botones">
-                    <Button variant="filled" color='red' size="md" radius="lg" style={{margin:'1rem'}}
-                        disabled={entradas.length === 0}
-                    >
-                        Comprar
-                    </Button>
-                </div>
-            </div>  */}
         </div>
     );
 };

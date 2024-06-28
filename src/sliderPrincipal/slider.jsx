@@ -10,8 +10,14 @@ import nbhd_slider from '../assets/nbhd_slider.jpg';
 import cuco_slider from '../assets/cuco_slider.jpg'; 
 import cuco_mobile from '../assets/cuco_mobile.jpg';
 import nbhd_mobile from '../assets/nbhd_mobile.webp';
+import { readEvents } from '../Firebase/eventManage/eventManage.js';
+import { readAtraction } from '../Firebase/atractionsManage/atractionsManage.js';
+import { readImage } from '../Firebase/imageManage/imageManage.js';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 function Slider() {
+
     const images = [
         // {
         //     original: clancy,
@@ -105,42 +111,97 @@ function Slider() {
         }
     ];
 
-    
+    const [eventosCompletos, setEventosCompletos] = useState([]);
+    const [eventosDestructurados, setEventosDestructurados] = useState([]);
+    let eventosTempo = [];
+    const getEventos = async () => {
+        const eventosLista = await readEvents();
+        
+        for (let i = 1; i < eventosLista.length; i++) {
+            const atraction = await readAtraction(eventosLista[i].idAttraction);
+            let eventoCompleto = {
+                ...eventosLista[i],
+                ...atraction
+            };
+            eventosTempo.push(eventoCompleto);
+        }
+    }
+    let eventosTemp = [];
+    const desestructuraciónEventos = async () => {
+        
+        for (let i = 0; i < eventosCompletos.length; i++) {
+            let imagenPasarela = '';
+            let imagenMobile = '';
+            let imagenSlider = '';
+            for (let n = 0; n < eventosCompletos[i].idImages.length; n++) {
+                try {
+                    const imagen = await readImage(eventosCompletos[i].idImages[n]);
+                    if (imagen.typeImage === 'pasarela') {
+                        imagenPasarela = imagen.urlImage;
+                    } else if (imagen.typeImage === 'mobile') {
+                        imagenMobile = imagen.urlImage;
+                    } else if (imagen.typeImage === 'slider') {
+                        imagenSlider = imagen.urlImage;
+                    } else {
+                        console.log('Error en la lectura de la imagen: tipo desconocido');
+                    }
+                } catch (error) {
+                    console.log('Error al leer la imagen:', error);
+                }
+            }
+            eventosTemp.push({
+                ...eventosCompletos[i],
+                imagenPasarela,
+                imagenMobile,
+                imagenSlider
+            });
+        }
+    }
 
     const navigate = useNavigate();
 
     const renderImage = (item) => {
-        return (( 
-            <div onClick={() => navigate(`/eventos/${item.Id}`, { state: {card : item}})} style={{cursor:'pointer'}}>
-                <img src={item.original} alt="" style={{ width: '100%', height: 'fit-content', objectFit: 'cover' }} />
-            </div>
-        ));
-    }
-
-    const imagesMobile = (item) => {
         return (
-            <div onClick={() => navigate(`/eventos/${item.Id}`, { state: {card : item}})} style={{cursor:'pointer'}}>
-                <img src={item.image_mobile} alt="" style={{ width: '400px', height: '450px', objectFit: 'cover' }} />
+            <div onClick={() => navigate(`/eventos/${item.idEvento}`, { state: { card: item } })} style={{ cursor: 'pointer' }}>
+                <img src={item.original} alt="hola" style={{ width: '100%', height: 'fit-content', objectFit: 'cover' }} />
             </div>
         );
     }
 
+    const imagesMobile = (item) => {
+        return (
+            <div onClick={() => navigate(`/eventos/${item.idEvento}`, { state: { card: item } })} style={{ cursor: 'pointer' }}>
+                <img src={item.mobile} alt="holaaaaaa" style={{ width: '400px', height: '450px', objectFit: 'cover' }} />
+            </div>
+        );
+    }
+
+    useEffect(() => {
+        const fetchData = async () => {
+            await getEventos();
+            setEventosCompletos(eventosTempo);
+            await desestructuraciónEventos();
+            setEventosDestructurados(eventosTemp);
+            console.log(eventosDestructurados);
+        };
+        fetchData();
+    },[]); // Ejecuta solo una vez al montar el componente
 
     return (
         <div className='Slider'>
-            <ImageGallery items={images} 
-            renderItem={
-                 /* necesito validar que si es mobile muestre la imagen mobile */
-                (item) => window.innerWidth < 768 ? imagesMobile(item) : renderImage(item)
-            }
-            disableThumbnailScroll={false}
-            showPlayButton={false}
-            showFullscreenButton={false}
-            showThumbnails={false}
-            showBullets={true}
-            showNav={true}
-            autoPlay={true} /*deslizar automaticamente*/
-            slideDuration={500}
+            <ImageGallery items={images}
+                renderItem={
+                    /* necesito validar que si es mobile muestre la imagen mobile */
+                    (item) => window.innerWidth < 768 ? imagesMobile(item) : renderImage(item)
+                }
+                disableThumbnailScroll={false}
+                showPlayButton={false}
+                showFullscreenButton={false}
+                showThumbnails={false}
+                showBullets={true}
+                showNav={true}
+                autoPlay={true} /*deslizar automaticamente*/
+                slideDuration={500}
             />
         </div>
     );

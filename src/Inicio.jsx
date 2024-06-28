@@ -7,11 +7,10 @@ import Header from './header/header.jsx';
 import Navbar from './navbar/navbar.jsx';
 import Home from './Home/home.jsx';
 
-
 function Inicio(){
     return (
         <>
-        <div className="App">
+        <div className="App"  >
                 <Body />
                 <Header />
                 <Home />

@@ -7,7 +7,7 @@ import { MdEmail } from "react-icons/md";
 import top_mobile from "../assets/top_pasarela.jpg";
 import OAuth from "../Components/OAuth";
 import { useDispatch, useSelector } from "react-redux";
-import { signInStart, signInSuccess, signInFailure } from "../Redux/User/userSlice";
+import { signInSuccess, signInFailure } from "../Redux/User/userSlice";
 import { useNavigate } from "react-router-dom";
 import { app } from "../Firebase/firebase";
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
@@ -57,6 +57,7 @@ export default function Login() {
     }
   }
 
+ 
   return (
     <div className="login_page">
       <div className="login-container">

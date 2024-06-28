@@ -48,7 +48,79 @@ import LoginPage from './login_page.jsx';
 import SignUp from './signUp/signUp.jsx';
 import ForgetPassword from './forget_password/forget_password.jsx';
 import Profile_Page from './perfil.jsx';
+import { readEvents } from './Firebase/eventManage/eventManage.js';
+import { useEffect } from 'react';
+import { readAtraction } from './Firebase/atractionsManage/atractionsManage.js';
+import { readImage } from './Firebase/imageManage/imageManage.js';
+
 function App(){
+    // const eventosCompletos = []
+    // let eventosDestructurados = []
+
+    // const getEventos = async () => {
+    //     const eventosLista = await readEvents();
+    //     // iterador del 1 al numero total de eventos 
+    //     for (let i = 1; i < eventosLista.length; i++) {
+    //         const atraction = await readAtraction(eventosLista[i].idAttraction);
+    //         // necesito que una estructura contenga todos los datos de eventosLista[i] y atraction
+    //         let eventoCompleto = {
+    //             ...eventosLista[i],
+    //             ...atraction
+    //         };
+
+    //         eventosCompletos.push(eventoCompleto);
+    //     }
+    // }
+
+    
+    // const desestructuraciónEventos = async () => {
+    //     for (let i = 0; i < eventosCompletos.length; i++) {
+    //         let imagenPasarela = '';
+    //         let imagenMobile = '';
+    //         let imagenSlider = '';
+    //         for (let n = 0; n < eventosCompletos[i].idImages.length; n++) {
+    //             try {
+    //                 const imagen = await readImage(eventosCompletos[i].idImages[n]);
+    //                 if (imagen.typeImage === 'pasarela') {
+    //                     imagenPasarela = imagen.urlImage;
+    //                 } else if (imagen.typeImage === 'mobile') {
+    //                     imagenMobile = imagen.urlImage;
+    //                 } else if (imagen.typeImage === 'slider') {
+    //                     imagenSlider = imagen.urlImage;
+    //                 } else {
+    //                     console.log('Error en la lectura de la imagen: tipo desconocido');
+    //                 }
+    //             } catch (error) {
+    //                 console.log('Error al leer la imagen:', error);
+    //             }
+    //         }
+    //         // como agregar estas variables como propiedad de eventosCompletos[i]?
+    //         eventosDestructurados = {
+    //             ...eventosCompletos[i],
+    //             imagenPasarela: imagenPasarela,
+    //             imagenMobile: imagenMobile,
+    //             imagenSlider: imagenSlider
+    //         };
+
+    //     }
+    // }
+
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //       await getEventos();
+    //       await desestructuraciónEventos();
+    //       console.log(eventosDestructurados);
+    //     };
+      
+    //     fetchData();
+    //   }, ); // El array vacío [] indica que este efecto se ejecuta solo al montar y desmontar el componente
+
+    
+
+    // necesito que se ejecute la funcion getEventos al iniciar la pagina
+
+    
+
     return (
         <>
         <div className="App">
