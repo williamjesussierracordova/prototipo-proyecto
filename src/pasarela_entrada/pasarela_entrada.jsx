@@ -13,6 +13,10 @@ import { Accordion } from "@mantine/core";
 // import { Form, isInRange, isNotEmpty, useForm } from '@mantine/form';
 import { Modal } from "@mantine/core";
 import { useDisclosure } from '@mantine/hooks';
+import axios from 'axios';
+import KRGlue from '@lyracom/embedded-form-glue';
+import PaymentForm from './PaymentForm';
+import CryptoJS from 'crypto-js';
 import { useSelector } from 'react-redux';
 import { readOfferDescription } from "../Firebase/offersManage/offersManage";
 
@@ -187,6 +191,10 @@ const Pasarela_Entrada = () => {
     // const [property, setProperty] = useState([]);
     // const [nextProperty, setNextProperty] = useState(null);
     const [opened, { open, close }] = useDisclosure(false);
+    const [isShow, setIsShow] = useState(false);
+    const [isValid, setIsValid] = useState(true);
+    const [amount, setAmount] = useState("");
+    const [error, setError] = useState("");
     useEffect(() => {
         window.scrollTo(0, 0);
       }, []);
@@ -205,6 +213,87 @@ const Pasarela_Entrada = () => {
     useEffect(() => {
         setCantidad(null);
     }, [precio]);
+
+    const publicKey = '44749292:testpublickey_apD4sxLwpcp7c4bDLabbYwPLpRyI5CwAhsDKtCUQu1v9O';
+    const endPoint = 'https://api.micuentaweb.pe';
+    const server = "http://localhost:3003";
+
+    const payment = (amount) => {
+        const ExpRegSoloNumeros = "^[0-9]+(\\.[0-9]{1,2})?$";
+        if (amount.match(ExpRegSoloNumeros) != null) {
+            getFormToken(amount, publicKey, endPoint);
+            setIsShow(true);
+        } else {
+            setIsValid(false);
+            setTimeout(() => setIsValid(true), 3000);
+        }
+    };
+
+    const getFormToken = (monto, publicKey, domain) => {
+        const dataPayment = {
+            amount: parseInt(monto) * 100,
+            currency: "PEN",
+            customer: {
+                email: "example@gmail.com"
+            },
+            orderId: "pedido-0"
+        };
+
+        axios.post(`${server}/api/createPayment`, dataPayment)
+            .then(({ data }) => {
+                if (!data.formToken) {
+                    throw new Error("Form Token no recibido");
+                }
+                console.log("Form Token recibido:", data.formToken);
+
+                return KRGlue.loadLibrary(domain, publicKey)
+                    .then(({ KR }) => KR.setFormConfig({
+                        formToken: data.formToken,
+                    }))
+                    .then(({ KR }) => KR.onSubmit(validatePayment))
+                    .then(({ KR }) => KR.attachForm("#form"))
+                    .then(({ KR, result }) => KR.showForm(result.formId));
+            })
+            .catch(err => {
+                console.error("Error en el proceso de obtención del formToken o en el proceso de carga del formulario:", err);
+                setError(err.message || "Error desconocido");
+            });
+    };
+
+    const validatePayment = (resp) => {
+        // Calcula el hash de los datos relevantes
+        const dataToHash = {
+            shopId: resp.shopId,
+            orderCycle: resp.orderCycle,
+            orderStatus: resp.orderStatus,
+            orderDetails: resp.orderDetails,
+            customer: resp.customer,
+            transactions: resp.transactions
+        };
+        const hash = CryptoJS.HmacSHA256(JSON.stringify(dataToHash), 'Gq3snkXEnxABXNKrnqRFqWU17AERYJgU8hSGTvoWnJHlh').toString();
+    
+        // Agrega el hash a los datos
+        const dataToSend = {
+            ...resp,
+            hash: hash
+        };
+    
+        axios.post(`${server}/validatePayment`, dataToSend)
+            .then(({ data }) => {
+                if (data === "Valid Payment") {
+                    setIsShow(false);
+                    alert("Pago Satisfactorio");
+                } else {
+                    alert("Pago Inválido");
+                }
+            })
+            .catch(err => {
+                console.error("Error en la validación del pago:", err);
+                alert("Error en la validación del pago");
+            });
+        return false;
+    };
+
 
     const rows = precios.map((element) => (
         <Table.Tr key={element} style={{ color: "white" }}>
@@ -249,6 +338,26 @@ const Pasarela_Entrada = () => {
             console.log("No se pueden agregar más de 6 entradas en total.");
         }
     };
+
+    const calcularMonto = () => {
+        const nuevoMonto = entradas.reduce((acc, entrada) => acc + entrada.precio * entrada.cantidad, 0);
+        setAmount(nuevoMonto.toString());
+        return nuevoMonto.toString(); // Devolver el nuevo monto
+    };
+    
+    const operacionesPagar = () => {
+        const nuevoMonto = calcularMonto();
+        console.log("Botón clickeado");
+    
+        setTimeout(() => {
+            console.log("Monto calculado: ", nuevoMonto); // Usar el nuevo monto directamente
+            open();
+            console.log("Después de open");
+            payment(nuevoMonto); // Pasar el nuevo monto a payment
+            console.log("Después de payment");
+        }, 3000);
+    };
+
 
    // Setear la informacion para guardar el recibo
 
@@ -437,22 +546,38 @@ const Pasarela_Entrada = () => {
                                 radius="lg"
                                 style={{ margin: "1rem" }}
                                 disabled={entradas.length === 0}
-                                onClick={open}
+                                onClick={operacionesPagar}
                             >
                                 Pagar
                             </Button>
                         </div>
                         <Modal
-                            opened={opened}
-                            onClose={close}
-                            title="Pasarela de pago"
-                            yOffset="120px"
+                        opened={opened}
+                        onClose={close}
+                        title="Pasarela de pago"
+                        yOffset="120px"
                         >
-                            {currentUser!=null ?
-                            <h1>Usuario: {currentUser.email}</h1>
-                            : <h1>Inicie sesion para poder comprar</h1>    
-                        }
+                        {currentUser != null ? (
+                        <>
+                        <h1>Usuario: {currentUser.email}</h1>
+                        {!isValid && (
+                        <h3 className="mensaje_error">Por favor, ingrese un monto válido</h3>
+                        )}
+                        {isShow && (
+                        <div className="center-container">
+                            <div id="myDIV" className="formulario" style={{ display: isShow ? "block" : "none" }}>
+                                <div id="form">
+                                    <PaymentForm />
+                                </div>
+                            </div>
+                        </div>
+                        )}
+                        </>
+                        ) : (
+                        <h1>Inicie sesión para poder comprar</h1>
+                        )}
                         </Modal>
+
                     </div>
                 </div>
             ),

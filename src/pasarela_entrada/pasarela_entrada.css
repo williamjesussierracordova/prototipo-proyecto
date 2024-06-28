@@ -93,6 +93,19 @@
     padding: 2rem 0;
 }
 
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+  }
+  
+  .center-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
 @media (max-width: 600px) {
     .pasarela_seleccion_entrada {
         flex-direction: column;
