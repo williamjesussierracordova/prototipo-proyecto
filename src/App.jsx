@@ -52,79 +52,16 @@ import { readEvents } from './Firebase/eventManage/eventManage.js';
 import { useEffect } from 'react';
 import { readAtraction } from './Firebase/atractionsManage/atractionsManage.js';
 import { readImage } from './Firebase/imageManage/imageManage.js';
-
+import Error404 from './error404/404page.jsx';
+import Novedad from './novedad_page.jsx';
 function App(){
-    // const eventosCompletos = []
-    // let eventosDestructurados = []
 
-    // const getEventos = async () => {
-    //     const eventosLista = await readEvents();
-    //     // iterador del 1 al numero total de eventos 
-    //     for (let i = 1; i < eventosLista.length; i++) {
-    //         const atraction = await readAtraction(eventosLista[i].idAttraction);
-    //         // necesito que una estructura contenga todos los datos de eventosLista[i] y atraction
-    //         let eventoCompleto = {
-    //             ...eventosLista[i],
-    //             ...atraction
-    //         };
-
-    //         eventosCompletos.push(eventoCompleto);
-    //     }
-    // }
-
-    
-    // const desestructuraciónEventos = async () => {
-    //     for (let i = 0; i < eventosCompletos.length; i++) {
-    //         let imagenPasarela = '';
-    //         let imagenMobile = '';
-    //         let imagenSlider = '';
-    //         for (let n = 0; n < eventosCompletos[i].idImages.length; n++) {
-    //             try {
-    //                 const imagen = await readImage(eventosCompletos[i].idImages[n]);
-    //                 if (imagen.typeImage === 'pasarela') {
-    //                     imagenPasarela = imagen.urlImage;
-    //                 } else if (imagen.typeImage === 'mobile') {
-    //                     imagenMobile = imagen.urlImage;
-    //                 } else if (imagen.typeImage === 'slider') {
-    //                     imagenSlider = imagen.urlImage;
-    //                 } else {
-    //                     console.log('Error en la lectura de la imagen: tipo desconocido');
-    //                 }
-    //             } catch (error) {
-    //                 console.log('Error al leer la imagen:', error);
-    //             }
-    //         }
-    //         // como agregar estas variables como propiedad de eventosCompletos[i]?
-    //         eventosDestructurados = {
-    //             ...eventosCompletos[i],
-    //             imagenPasarela: imagenPasarela,
-    //             imagenMobile: imagenMobile,
-    //             imagenSlider: imagenSlider
-    //         };
-
-    //     }
-    // }
-
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //       await getEventos();
-    //       await desestructuraciónEventos();
-    //       console.log(eventosDestructurados);
-    //     };
-      
-    //     fetchData();
-    //   }, ); // El array vacío [] indica que este efecto se ejecuta solo al montar y desmontar el componente
-
-    
-
-    // necesito que se ejecute la funcion getEventos al iniciar la pagina
-
-    
 
     return (
         <>
         <div className="App">
             <Routes>
+                <Route path='/novedades/:idNovedad' element={<Novedad />} />
                 <Route path="/" element={<Inicio />} />
                 <Route path='/contacto' element={<Contacto />} />
                 <Route path='/nosotros' element={<Nosotros />} />
@@ -134,7 +71,7 @@ function App(){
                 <Route path='/eventos/:idEvento' element={<Espectaculo_page />} />
                 <Route path='/entradas' element={<Pasarela_Entrada />} />
                 <Route path='/login' element={<LoginPage />} />
-                <Route path='*' element={<h1>404 Not Found</h1>} />
+                <Route path='*' element={<Error404/>} />
                 <Route path='/registrar' element={<SignUp />} />
                 <Route path='/forget_password' element={<ForgetPassword />} />
                 <Route path='/profile' element={<Profile_Page/>} />

@@ -59,7 +59,7 @@ const Footer = () => {
                     </div> */}
         <div className="sb__footer-links_div">
           <h2>Sobre nosotros</h2>
-          <a href="/company">
+          <a href="/nosotros">
             <p> • Acerca de nosotros</p>
           </a>
           <a href="/company">
@@ -71,19 +71,19 @@ const Footer = () => {
           <a href="/company">
             <p> • Preguntas Frecuentes</p>
           </a>
-          <a href="/company">
+          <a href="https://ww1.sunat.gob.pe/ol-ti-itconsultaunificadalibre/consultaUnificadaLibre/consulta" target="_blank">
             <p> • Revisa tu comprobante</p>
           </a>
         </div>
         <div className="sb__footer-links_div">
           <h2>Trabajemos juntos</h2>
-          <a href="/legal">
+          <a href="/contacto">
             <p> • Tienes un evento?</p>
           </a>
-          <a href="/legal">
+          <a href="/contacto">
             <p> • Contacto empresas</p>
           </a>
-          <a href="/legal">
+          <a href="/contacto">
             <p> • Modulo de atención</p>
           </a>
         </div>

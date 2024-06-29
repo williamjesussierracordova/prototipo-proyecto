@@ -1,13 +1,15 @@
 import React from "react";
 import "./navbar.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { TiThMenu } from "react-icons/ti";
 import { IoCloseCircle } from "react-icons/io5";
 import { useState } from "react";
 
+
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
 
+    const navigate = useNavigate();
     const toggleMenu = () => {
         setIsOpen(!isOpen);
     };
@@ -23,7 +25,7 @@ const Navbar = () => {
                             </Link>
                         </a>
                         <a href="">
-                            <Link to="/espectaculos">
+                            <Link to="/espectaculos" >
                                 <p>Espectaculos</p>
                             </Link>
                         </a>

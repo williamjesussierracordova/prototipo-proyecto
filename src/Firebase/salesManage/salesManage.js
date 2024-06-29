@@ -13,6 +13,7 @@ export async function writeSale(idSale, idUser, metodoPago, totalSale, estadoSal
         }
 
         set(saleRFC, {
+            idSale: idSale,
             idUser: idUser,
             metodoPago: metodoPago,
             totalSale: totalSale,
@@ -35,5 +36,24 @@ export async function readSale(idSale){
     }
 }
 
-// writeSale(1,'72074565','Visa',1025.90,'Completado')
+export async function readSaleUser(idUser){
+    const saleRFC = ref(db, 'sales/');
+    try {
+        const snapshot = await get(saleRFC);
+        let data = snapshot.val();
+        let sales = [];
+        for (const key in data) {
+            if (data[key].idUser == idUser) {
+                sales.push(data[key]);
+            }
+        }
+        return sales;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+
+
+writeSale(1,'46531368','Visa',1025.90,'Completado')
 // console.log(await readSale(1))

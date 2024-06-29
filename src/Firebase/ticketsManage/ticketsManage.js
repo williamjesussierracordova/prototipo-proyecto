@@ -44,4 +44,21 @@ export async function readTicket(idTicket){
     }
 }
 
+export async function readTicketSale(idSale){
+    const ticketRFC = ref(db, 'tickets/');
+    try {
+        const snapshot = await get(ticketRFC);
+        let data = snapshot.val();
+        let tickets = [];
+        for (const key in data) {
+            if (data[key].idSale == idSale) {
+                tickets.push(data[key]);
+            }
+        }
+        return tickets;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 writeTicket(1,1,'72074565',1)

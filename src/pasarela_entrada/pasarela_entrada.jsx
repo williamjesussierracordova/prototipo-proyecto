@@ -19,6 +19,7 @@ import PaymentForm from './PaymentForm';
 import CryptoJS from 'crypto-js';
 import { useSelector } from 'react-redux';
 import { readOfferDescription } from "../Firebase/offersManage/offersManage";
+import { useNavigate } from "react-router-dom";
 
 const precios = [
     {
@@ -195,6 +196,8 @@ const Pasarela_Entrada = () => {
     const [isValid, setIsValid] = useState(true);
     const [amount, setAmount] = useState("");
     const [error, setError] = useState("");
+    const navigator = useNavigate();
+
     useEffect(() => {
         window.scrollTo(0, 0);
       }, []);
@@ -283,6 +286,8 @@ const Pasarela_Entrada = () => {
                 if (data === "Valid Payment") {
                     setIsShow(false);
                     alert("Pago Satisfactorio");
+                    // redirigir a la página de éxito
+                    navigator("/profile")
                 } else {
                     alert("Pago Inválido");
                 }
@@ -559,7 +564,6 @@ const Pasarela_Entrada = () => {
                         >
                         {currentUser != null ? (
                         <>
-                        <h1>Usuario: {currentUser.email}</h1>
                         {!isValid && (
                         <h3 className="mensaje_error">Por favor, ingrese un monto válido</h3>
                         )}

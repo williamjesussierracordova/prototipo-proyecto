@@ -1,5 +1,5 @@
 import './profile.css'
-import { Button, Input, PasswordInput } from '@mantine/core'
+import { Accordion, Button, Input, PasswordInput } from '@mantine/core'
 import { CgProfile } from "react-icons/cg";
 import { IoTicketOutline } from "react-icons/io5";
 import { RiLockPasswordLine } from "react-icons/ri";
@@ -11,11 +11,14 @@ import { useDispatch } from 'react-redux';
 import { signInSuccess, signoutSuccess } from '../Redux/User/userSlice';
 import { getAuth } from 'firebase/auth';
 import { EmailAuthProvider } from 'firebase/auth/web-extension';
-import { useEffect, useState } from 'react';
+import { use, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { updateUserDNI, updateUserPassword, updateUserPhone } from '../Firebase/UserManage/userController';
 import { onValue, ref } from 'firebase/database';
 import { readPromoter } from '../Firebase/promotersManage/promotersManage';
+import { readSaleUser } from '../Firebase/salesManage/salesManage';
+import { readTicketSale } from '../Firebase/ticketsManage/ticketsManage';
+import { readOffer } from '../Firebase/offersManage/offersManage';
 const auth = getAuth(app);
 
 export default function Profile() {
@@ -29,24 +32,24 @@ export default function Profile() {
     const [userData, setUserData] = useState(currentUser);
     const [phoneValid, setPhoneValid] = useState(false);
     const [dniValid, setDniValid] = useState(false);
-    const [nameUser,setNameUser] = useState(userData.name);
+    const [nameUser, setNameUser] = useState(userData.name);
     const [lastNameUser, setLastNameUser] = useState(userData.firstLastName + ' ' + userData.secondLastName);
-    const [emailUser,setEmailUser] = useState(userData.email);
-    const [phoneUser,setPhoneUser] = useState(userData.phone);
-    const [dniUser,setDniUser] = useState(userData.DNI);
+    const [emailUser, setEmailUser] = useState(userData.email);
+    const [phoneUser, setPhoneUser] = useState(userData.phone);
+    const [dniUser, setDniUser] = useState(userData.DNI);
 
     const handlePhone = (e) => {
         const phone = e.target.value;
         setPhoneUser(phone);
         setUserData({ ...userData, phone: e.target.value });
-        setPhoneValid(phone.length === 9  );
+        setPhoneValid(phone.length === 9);
     }
 
     const handleDNI = (e) => {
         const DNI = e.target.value;
         setDniUser(DNI);
         setUserData({ ...userData, DNI: e.target.value });
-        setDniValid(DNI.length === 8 );
+        setDniValid(DNI.length === 8);
     }
 
     const handleSignOut = async () => {
@@ -85,10 +88,10 @@ export default function Profile() {
 
                 updateUserPassword(currentUser.idUser, newpassword);
             })
-            .catch((error)=>{
-                console.log(error);
-                alert('Contraseña incorrecta');
-            })
+                .catch((error) => {
+                    console.log(error);
+                    alert('Contraseña incorrecta');
+                })
 
         }
         catch (error) {
@@ -104,7 +107,7 @@ export default function Profile() {
             updateUserDNI(currentUser.idUser, dniUser);
             userData.phone = phoneUser;
             userData.DNI = dniUser;
-            
+
             dispatch(signInSuccess(userData));
             history('/profile');
         }
@@ -115,24 +118,59 @@ export default function Profile() {
 
     const [events, setEvents] = useState([]);
     const eventsFirebase = () => {
-      try{
-        const eventsReference = ref(db, 'events/');
-        onValue(eventsReference, (snapshot) => {
-          const data = snapshot.val();
-          setEvents(data);
+        try {
+            const eventsReference = ref(db, 'events/');
+            onValue(eventsReference, (snapshot) => {
+                const data = snapshot.val();
+                setEvents(data);
 
-        });
-      }
-      catch(error){
-        console.error(error);
-      }
+            });
+        }
+        catch (error) {
+            console.error(error);
+        }
     }
-  
+    let userId=[]
+    let sales=[]
+    let tickets = []
+    let oferta = []
+
+    const consultarSales = async () => {
+        userId = currentUser.idUser;
+        sales = await readSaleUser(userId);
+        sales.map(async (sale) => {
+            tickets.push( await readTicketSale(sale.idSale));
+        })
+        
+        
+        console.log(sales);
+        console.log(tickets);
+        console.log(oferta);
+    }
+
+    useEffect(() => {
+        consultarSales();
+    }, []);
+
     useEffect(() => {
         eventsFirebase();
-      }, []);
-  
-    
+    }, []);
+
+    // necesito que se posicione al inicio
+    useEffect(() => {
+        // Desplaza al inicio de la página al cargar el componente
+        window.scrollTo(0, 0);
+    }, []);
+
+
+    // const items = acoordion_entradas[0].map((item) => (
+    //     <Accordion.Item key={item.value} value={item.value} >
+    //         <Accordion.Control icon={item.emoji}  >
+    //             {item.value}
+    //         </Accordion.Control>
+    //         <Accordion.Panel>{item.description}</Accordion.Panel>
+    //     </Accordion.Item>
+    // ));
 
     return (
         <div className='profile_page'>
@@ -142,7 +180,7 @@ export default function Profile() {
             <div className='profile_container'>
                 <div className='profile_buttons'>
                     <Button onClick={handleShowPerfil} leftSection={<CgProfile />} variant='light' radius='xs' size="md" className='profile_button' fullWidth style={{ border: '1px solid black' }} >Mi perfil</Button>
-                    <Button onClick={eventsFirebase} leftSection={<IoTicketOutline />} variant='light' radius='xs' size="md" className='profile_button' fullWidth style={{ border: '1px solid black' }}>Mis entradas</Button>
+                    <Button onClick={handleShowEntradas} leftSection={<IoTicketOutline />} variant='light' radius='xs' size="md" className='profile_button' fullWidth style={{ border: '1px solid black' }}>Mis entradas</Button>
                     <Button onClick={handleShowCambiarContraseña} leftSection={<RiLockPasswordLine />} variant='light' radius='xs' size="md" className='profile_button' fullWidth style={{ border: '1px solid black' }}>Cambiar contraseña</Button>
                     <Button leftSection={<CiLogout />} variant='light' radius='xs' size="md" className='profile_button' color='red' fullWidth style={{ border: '1px solid black' }} onClick={handleSignOut}>Cerrar sesion</Button>
                 </div>
@@ -153,7 +191,7 @@ export default function Profile() {
                             <div className='profile_datos'>
                                 <div className='profile_datos_1'>
                                     <Input.Wrapper label="Nombre" >
-                                        <Input placeholder="Nombre" disabled='true' value={nameUser} style={{width:'220px'}}/>
+                                        <Input placeholder="Nombre" disabled='true' value={nameUser} style={{ width: '220px' }} />
                                     </Input.Wrapper>
                                     <Input.Wrapper label="Apellidos" >
                                         <Input placeholder="Apellidos" disabled='true' value={lastNameUser} />
@@ -164,22 +202,22 @@ export default function Profile() {
                                 </div>
                                 <div className='profile_datos_2'>
                                     <Input.Wrapper label="Telefono" >
-                                        <Input placeholder="Telefono" disabled={currentUser.phone}  value={phoneUser} onChange={handlePhone} onKeyPress={(event) => {
+                                        <Input placeholder="Telefono" disabled={currentUser.phone} value={phoneUser} onChange={handlePhone} onKeyPress={(event) => {
                                             if (!/[0-9]/.test(event.key)) {
                                                 event.preventDefault();
                                             }
                                         }}
                                             error={!phoneValid}
-                                            style={{width:'220px'}}
+                                            style={{ width: '220px' }}
                                         />
                                     </Input.Wrapper>
                                     <Input.Wrapper label="DNI">
-                                        <Input placeholder="DNI" disabled={currentUser.DNI !== '00000000' && currentUser.DNI.length==8 }  onChange={handleDNI} 
-                                        onKeyPress={(event) => {
-                                            if (!/[0-9]/.test(event.key)) {
-                                                event.preventDefault();
-                                            }
-                                        }}
+                                        <Input placeholder="DNI" disabled={currentUser.DNI !== '00000000' && currentUser.DNI.length == 8} onChange={handleDNI}
+                                            onKeyPress={(event) => {
+                                                if (!/[0-9]/.test(event.key)) {
+                                                    event.preventDefault();
+                                                }
+                                            }}
                                             error={!dniValid}
                                             value={dniUser}
                                         />
@@ -191,8 +229,9 @@ export default function Profile() {
                     )}
                     {activeSection === 'entradas' && (
                         <div className='profile_entradas_container'>
-                            <h1>Entradas</h1>
-                            <Button variant='light' radius='xs' size="md" type="submit" fullWidth style={{ border: '1px solid black' }} >Cambiar contraseña</Button>
+                            <Accordion variant="separated" radius="lg" defaultValue="Seleccion de entradas" >
+                                {items}
+                            </Accordion>
                         </div>
                     )}
                     {activeSection === 'cambiarContraseña' && (

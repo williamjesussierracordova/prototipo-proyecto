@@ -10,47 +10,20 @@ import nbhd_slider from '../assets/nbhd_slider.jpg';
 import cuco_slider from '../assets/cuco_slider.jpg'; 
 import cuco_mobile from '../assets/cuco_mobile.jpg';
 import nbhd_mobile from '../assets/nbhd_mobile.webp';
+import artic_pasarela from '../assets/artic_pasarela.jpg';
 import { readEvents } from '../Firebase/eventManage/eventManage.js';
 import { readAtraction } from '../Firebase/atractionsManage/atractionsManage.js';
 import { readImage } from '../Firebase/imageManage/imageManage.js';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import artic_slider from '../assets/artic_slider.avif';
+import joji_pasarela from '../assets/joji_pasarela.jpg';
 
 function Slider() {
 
     const images = [
-        // {
-        //     original: clancy,
-        //     thumbnail: 'https://picsum.photos/id/1018/250/150/',
-        //     url: '/espectaculos',// Cambia esto a la URL a la que quieres redirigir al usuario,
-        //     id: 1
-        // },
-        // {
-        //     original: pandemonium,
-        //     thumbnail: 'https://picsum.photos/id/1015/250/150/',
-        //     url: 'https://jojimusic.com/', // Cambia esto a la URL a la que quieres redirigir al usuario.
-        //     id: 2
-        // },
-        // {
-        //     original: nbhd,
-        //     thumbnail: 'https://picsum.photos/id/1019/250/150/',
-        //     url: 'https://jojimusic.com/', // Cambia esto a la URL a la que quieres redirigir al usuario
-        //     id: 3
-        // },
-        // {
-        //     original: 'https://picsum.photos/id/1020/1920/650/',
-        //     thumbnail: 'https://picsum.photos/id/1020/250/150/',
-        //     url: 'https://jojimusic.com/', // Cambia esto a la URL a la que quieres redirigir al usuario
-        //     id: 1
-        // },
-        // {
-        //     original: cuco_tour,
-        //     thumbnail: 'https://picsum.photos/id/1020/250/150/',
-        //     url: 'https://jojimusic.com/', // Cambia esto a la URL a la que quieres redirigir al usuario
-        //     id:2
-        // },
         {
-            Id:1,
+            id:1,
             original: clancy,
             Image: clancy,
             image_mobile: top_pasarela,
@@ -70,7 +43,7 @@ function Slider() {
             image_pasarela: top_pasarela
         },
         {
-            Id:2,
+            id:2,
             Image: nbhd_slider,
             original: nbhd_slider,
             image_mobile: nbhd_mobile,
@@ -90,7 +63,7 @@ function Slider() {
             image_pasarela: nbhd_pasarela
         },
         {
-            Id:3,
+            id:3,
             Image: cuco_slider,
             original: cuco_slider,
             image_mobile: cuco_mobile,
@@ -108,7 +81,48 @@ function Slider() {
             min_price: 100,
             artist: 'Cuco',
             image_pasarela: cuco_pasarela
+        },
+        {
+            id:4,
+            Image: artic_slider,
+            original: artic_slider,
+            image_mobile: artic_slider,
+            title: 'CAR TOUR',
+            subtitle: 'ARTIC MONKEYS EN LIMA',
+            description: 'Artic Monkeys en Lima por primera vez',
+            text_description: 'The Arctic Monkeys are an English rock band formed in Sheffield in 2002. The group consists of Alex Turner, Jamie Cook, Nick OMalley, and Matt Helders. Former band member Andy Nicholson left the band in 2006 shortly after their debut album was released.',
+            badge: '04 Sep 2025',
+            message_button: 'Comprar Entradas',
+            date: '2025-09-04T21:00:00-05:00',
+            day: '04',
+            month: 'Septiembre',
+            open_door: '20:00',
+            start: '21:00',
+            min_price: 200,
+            artist: 'Artic Monkeys',
+            image_pasarela: artic_slider
+        },
+        {
+            id:5,
+            Image: joji_pasarela,
+            original: joji_pasarela,
+            image_mobile: joji_pasarela,
+            title: 'BALLADS 1 TOUR',
+            subtitle: 'JOJI EN LIMA',
+            description: 'Joji en Lima por primera vez',
+            text_description: 'George Kusunoki Miller, known professionally as Joji and formerly by his online aliases Filthy Frank and Pink Guy, is a Japanese singer, songwriter, record producer, author, and former Internet personality and comedian. He is known for his music and comedy content on YouTube and TVFilthyFrank.',
+            badge: '09 Ago 2025',
+            message_button: 'Comprar Entradas',
+            date: '2025-08-09T21:00:00-05:00',
+            day: '09',
+            month: 'Agosto',
+            open_door: '20:00',
+            start: '21:00',
+            min_price: 150,
+            artist: 'Joji',
+            image_pasarela: joji_pasarela
         }
+
     ];
 
     const [eventosCompletos, setEventosCompletos] = useState([]);
@@ -162,7 +176,7 @@ function Slider() {
 
     const renderImage = (item) => {
         return (
-            <div onClick={() => navigate(`/eventos/${item.idEvento}`, { state: { card: item } })} style={{ cursor: 'pointer' }}>
+            <div onClick={() => navigate(`/eventos/${item.id}`, { state: { card: item } })} style={{ cursor: 'pointer', height:'470px'}}>
                 <img src={item.original} alt="hola" style={{ width: '100%', height: 'fit-content', objectFit: 'cover' }} />
             </div>
         );
@@ -170,8 +184,8 @@ function Slider() {
 
     const imagesMobile = (item) => {
         return (
-            <div onClick={() => navigate(`/eventos/${item.idEvento}`, { state: { card: item } })} style={{ cursor: 'pointer' }}>
-                <img src={item.mobile} alt="holaaaaaa" style={{ width: '400px', height: '450px', objectFit: 'cover' }} />
+            <div onClick={() => navigate(`/eventos/${item.id}`, { state: { card: item } })} style={{ cursor: 'pointer' }}>
+                <img src={item.image_mobile} alt="holaaaaaa" style={{ width: '400px', height: '450px', objectFit: 'cover' }} />
             </div>
         );
     }

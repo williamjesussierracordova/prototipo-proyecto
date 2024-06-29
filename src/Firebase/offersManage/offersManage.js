@@ -62,6 +62,8 @@ export async function readOfferDescription(description){
     }
 }
 
+
+
 // writeOffer(1,1,'visibilidad media', 100, 'PEN', 2, 1)
 // console.log(await readOffer(1).then((data)=>{return data.idArea}))
 
